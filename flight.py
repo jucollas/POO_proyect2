@@ -95,11 +95,11 @@ class Flight(AbsFlight):
     def takeOff(self):
         if not self.isActive():
             print("The flight is not active")
-        elif not self.isInAir():
+        elif self.isInAir():
             print("The flight is already in the air")
         else:
             self._control.freeBoardingGate(self._gateId)
-            self._gateId = ""
+            self._gateId = None
             print("The take-off was successful")
 
     def activateFlight( self ) -> bool :
@@ -119,6 +119,10 @@ class Flight(AbsFlight):
             self._activeFlight = False
             self._alreadyFlew = True
         return res
+
+    def disconnectFlight( self ):
+        if ( self._control is not None ):
+            self._control.deleteFlight( self )
 
     def hasItAlreadyFlew(self):
         return self._alreadyFlew
@@ -146,8 +150,8 @@ class Flight(AbsFlight):
     def __str__(self) -> str :
         tmp = ["active" if self.isActive() else "inactive"]
         if self.isActive():
-            tmp.append( "and flying." if self.isInAir() else f" and assigned to gate {self._gateId}" )
-        tmp.append(f". Flight {self._flightCode} with {len(self._passengers)} passengers. It goes from {self._origin} to {self._destiny}. It is assigned to the aircraft {self._aircraft.getN_number()}")
+            tmp.append( "and flying." if self.isInAir() else f" and assigned to gate {self._gateId}." )
+        tmp.append(f"Flight {self._flightCode} with {len(self._passengers)} passengers. It goes from {self._origin} to {self._destiny}. It is assigned to the aircraft {self._aircraft.getN_number()}")
         return " ".join( tmp )
 
 if __name__ == "__main__":

@@ -1,0 +1,6 @@
+
+
+airlines = {}
+cities = {}
+disconnectedFlights = {}
+

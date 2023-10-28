@@ -1,5 +1,4 @@
 
-
 from abstract_flight import AbsFlight
 from message import Message
 from gate_control import GateControl
@@ -11,9 +10,16 @@ class ControlTower:
         self._gateControl = GateControl()
         self._city = city;
 
+    def getCity( self ) -> str :
+        return self._city
+
+    def getFlights( self ) -> list[AbsFlight] :
+        res = []
+        for f in self._flights:
+            res.append( f )
+        return res
+
     def addFlight(self, f: AbsFlight) -> None:
-        if ( f.getOrigin() == self._city ):
-            f.setBoardingGate( self._gateControl.bookBoardingGate( f ) )
         self._flights.add( f )
         f.setControlTower( self )
 
