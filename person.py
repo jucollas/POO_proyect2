@@ -42,5 +42,9 @@ class Person:
     def setEmail(self, email) -> None:
         self._email = email
 
-    def info(self) -> str:
+    def __str__ (self) -> str:
         return f"{self._name} {self._surname}[{self._cedula}]"
+
+if __name__ == "__main__":
+    p = Person( "1110101", "oscar", "vargas", "hoy", "macho", "en tu casa", "0135462013", "hola@gmail.com" )
+    print( p );

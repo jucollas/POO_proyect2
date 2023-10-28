@@ -7,15 +7,20 @@ class Passenger(Person):
         self._medicalInfo = medicalInfo
         self.luggageAmount = luggageAmount
 
-    def getNationality(self):
+    def getNationality(self) -> str:
         return self._nationality
 
-    def getMedicalInfo(self):
+    def getMedicalInfo(self) -> str:
         return self._medicalInfo
 
     def setMedicalInfo(self, medicalInfo):
         self._medicalInfo = medicalInfo
 
-    def info(self):
-        print(super().info())
-        print(f".Medical information: {self.medicalInfo}.")
+    def __str__(self) -> str :
+        tmp = [super().__str__()]
+        tmp.append( f"Medical information: {self._medicalInfo}" );
+        return ". ".join( tmp );
+
+if __name__ == "__main__":
+    pas = Passenger( "1110101", "oscar", "vargas", "hoy", "macho", "en tu casa", "0135462013", "hola@gmail.com", "colombiano", "muerto", 5 );
+    print( pas )

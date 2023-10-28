@@ -1,8 +1,13 @@
 from message import Message
+from person import Person
 from passenger import Passenger
 from crew import Crew
-from control_tower import ControlTower
 from aircraft import Aircraft
+
+from control_tower import ControlTower
+
+
+
 import random
 import time
 

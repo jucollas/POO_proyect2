@@ -1,6 +1,10 @@
+
 from flight import Flight
+
+
 from message import Message
 from gate_control import GateControl
+
 
 class ControlTower:
     def __init__(self):

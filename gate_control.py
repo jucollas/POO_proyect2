@@ -1,5 +1,6 @@
-from boarding_gate import BoardingGate
 from flight import Flight
+
+from boarding_gate import BoardingGate
 
 class GateControl:
     def __init__(self):

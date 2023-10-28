@@ -1,5 +1,6 @@
 from flight import Flight
 
+
 class BoardingGate:
     def __init__(self, identification: str, location: str) -> None:
         self.identification = identification
@@ -15,7 +16,7 @@ class BoardingGate:
         return self.location
 
     def get_history(self) -> list[Flight]:
-        return self.history
+        return self.history.copy(); # to prevent weird changes in the self.history log
 
     def get_in_gate(self) -> Flight:
         return self.inGate
@@ -35,10 +36,13 @@ class BoardingGate:
     def is_available(self) -> bool:
         return self.inGate is None
 
-    def info(self) -> None:
-        info_str = f"Gate: {self.identification}, located in {self.location}."
+    def __str__ (self) -> str :
+        info_str = [f"Gate: {self.identification}, located in {self.location}."]
         if self.inGate is None:
-            info_str += " It hosts no flight."
+            info_str.append(" It hosts no flight.")
         else:
-            info_str += f" It hosts flight with code: {self.inGate.get_flight_code()} at {self.boardingTime}."
-        print(info_str)
+            info_str.append(f" It hosts flight with code: {self.inGate.get_flight_code()} at {self.boardingTime}.")
+        return "".join( info_str );
+
+if __name__ == "__main__":
+    pass
