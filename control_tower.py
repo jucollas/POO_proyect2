@@ -1,44 +1,66 @@
 
-from flight import Flight
 
-
+from abstract_flight import AbsFlight
 from message import Message
 from gate_control import GateControl
 
 
 class ControlTower:
-    def __init__(self):
-        self.instance = None
-        self.flights : set[Flight] = set()
-        self.gateControl = GateControl()
+    def __init__( self, city : str ):
+        self._flights : set[AbsFlight] = set()
+        self._gateControl = GateControl()
+        self._city = city;
 
-    @staticmethod
-    def get_instance() -> 'ControlTower':
-        if ControlTower.instance is None:
-            ControlTower.instance = ControlTower()
-        return ControlTower.instance
+    def addFlight(self, f: AbsFlight) -> None:
+        if ( f.getOrigin() == self._city ):
+            f.setBoardingGate( self._gateControl.bookBoardingGate( f ) )
+        self._flights.add( f )
+        f.setControlTower( self )
 
-    def add_flight(self, f: Flight) -> None:
-        self.flights.add(f)
+    def deleteFlight(self, f: AbsFlight) -> None:
+        if f in self._flights:
+            self._flights.discard( f )
+            f.setControlTower( None )
 
-    def delete_flight(self, f: Flight) -> None:
-        self.flights.discard(f)
+    def notifyFlights(self, m: Message) -> None:
+        for f in self._flights:
+            f.receiveMessage(m)
 
-    def notify_flights(self, m: Message) -> None:
-        for f in self.flights:
-            f.receive_message(m)
+    def bookBoardingGate(self, f: AbsFlight) -> str:
+        return self._gateControl.bookBoardingGate(f)
 
-    def book_boarding_gate(self, f: Flight) -> str:
-        return self.gateControl.book_boarding_gate(f)
+    def freeBoardingGate(self, gate_id: str) -> None:
+        self._gateControl.freeBoardingGate( gate_id )
 
-    def free_boarding_gate(self, gate_id: str) -> None:
-        self.gateControl.free_boarding_gate(gate_id)
+    def addGate(self, gateId: str, location: str) -> None:
+        self._gateControl.addGate( gateId, location)
 
-    def info(self) -> None:
-        print(f"There are {len(self.flights)} flights connected to the control tower.")
-        for f in self.flights:
-            f.info()
-        self.gateControl.info()
+    def getFlights( self ) -> set[AbsFlight] :
+        return self._flights.copy()
 
-    def add_gate(self, id: str, location: str) -> None:
-        self.gateControl.add_gate(id, location)
+    def __str__( self ) -> str:
+        tmp = [ f"There are {len(self._flights)} flights connected to the control tower." ]
+        for f in self._flights:
+            tmp.append( f.__str__() )
+        tmp.append( self._gateControl.__str__() )
+        return "\n".join( tmp );
+
+if __name__ == "__main__":
+    from flight import Flight
+    from aircraft import Aircraft
+    import datetime
+    ct = ControlTower( "cali" );
+    print( ct )
+    av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
+    f1 = Flight( av, [], "cactus-88", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    ct.addFlight( f1 )
+    f2 = Flight( av, [], "cactus-89", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    ct.addFlight( f2 )
+    f3 = Flight( av, [], "cactus-90", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    ct.addFlight( f3 )
+    f3.activateFlight( False )
+
+    print( ct )
+    f3.sendFlightInformation()
+
+

@@ -4,82 +4,93 @@ from passenger import Passenger
 from crew import Crew
 from aircraft import Aircraft
 
+from abstract_flight import AbsFlight
 from control_tower import ControlTower
-
 
 
 import random
 import time
+import datetime
 
-class Flight:
-    def __init__(self, aircraft : Aircraft, control : ControlTower, crewMates : list[Crew], flightCode : str, date : str, origin : str, destiny : str, latitude : float, longitude : float, height : int):
-        self.aircraft = aircraft
-        self.control = control
-        self.crewMates = crewMates
-        self.flightCode = flightCode
-        self.date = date
-        self.origin = origin
-        self.destiny = destiny
-        self.latitude = latitude
-        self.longitude = longitude
-        self.height = height
-        self.activeFlight = False
-        self.alreadyFlew = False
-        self.gateId = ""
+class Flight(AbsFlight):
+    def __init__(self, aircraft : Aircraft, crewMates : list[Crew], flightCode : str, date : datetime.date, origin : str, destiny : str ):
+        self._aircraft = aircraft
+        self._control = None
+        self._crewMates = crewMates
+        self._flightCode = flightCode
+        self._date = date
+        self._origin = origin
+        self._destiny = destiny
+        self._activeFlight = False
+        self._alreadyFlew = False
+        self._gateId = None
+        self._passengers = []
         aircraft.assignFlight()
+
+    # get
     
     def getGateId(self):
-        return self.gateId
+        return self._gateId
 
-    def getFlightCode(self):
-        return self.flightCode
+    def getFlightCode(self) -> str :
+        return self._flightCode
 
-    def getDate(self):
-        return self.date
+    def getDate(self) -> datetime.date :
+        return self._date
 
-    def getOrigin(self):
-        return self.origin
+    def getOrigin(self) -> str :
+        return self._origin
 
-    def getDestiny(self):
-        return self.destiny
+    def getDestiny(self) -> str :
+        return self._destiny
 
-    def getAircraft(self):
-        return self.aircraft
+    def getAircraft(self) -> Aircraft :
+        return self._aircraft
 
-    def getPassengers(self):
-        return self.passengers
+    def getPassengers(self) -> list[Passenger] :
+        return self._passengers.copy() # para evitar cambios raros en self._passengers
 
-    def getCrewMates(self):
-        return self.crewMates
+    def getCrewMates(self) -> list[Crew] :
+        return self._crewMates.copy() # para evitar cambios raros en self._crewMates
 
-    def sendFlightInformation(self):
-        if not self.isActive():
-            print("The flight is inactive")
+    # set
+
+    def setControlTower( self, controlTower ) -> None :
+        self._control = controlTower
+
+    def setBoardingGate( self, boardingGate ) -> None :
+        self._gateId = boardingGate
+
+    # functiones
+
+    def sendFlightInformation(self) -> None :
+        if not self.isActive() or self._control is None :
             return
+
         random.seed(time.time())
         latitude = round(random.uniform(-90, 90), 2)
         height = random.randint(-9000, 9000)
         longitude = round(random.uniform(-180, 180), 2)
-        self.setCoordinates(height, latitude, longitude)
-        self.infoCord()
         message = Message(longitude, latitude, height, self.flightCode)
-        self.control.notifyFlights(message)
+        self._control.notifyFlights(message)
 
-    def receiveMessage(self, message):
+    def receiveMessage( self, message : Message ) -> None :
         if message.flightCode != self.flightCode:
-            print(f"{self.flightCode} received the message: latitude({message.latitude}), longitude({message.longitude}), height({message.height}) flightCode({message.flightCode})")
+            print(f"{self.flightCode} received the message: %s" % ( str( message ) ) )
 
-    def land(self):
+    def land (self ) -> None :
         if not self.isActive():
             print("The flight is not active")
         elif not self.isInAir():
             print("Was already on land")
+        elif self._control is None:
+            print( "No control tower connected" )
         else:
-            self.gateId = self.control.bookBoardingGate(self)
-            if not self.gateId:
+            self._gateId = self._control.bookBoardingGate(self)
+            if not self._gateId:
                 print("Unable to land")
             else:
-                print(f"Landed. The assigned boarding gate is: {self.gateId}")
+                print(f"Landed. The assigned boarding gate is: {self._gateId}")
 
     def takeOff(self):
         if not self.isActive():
@@ -87,74 +98,73 @@ class Flight:
         elif not self.isInAir():
             print("The flight is already in the air")
         else:
-            self.control.freeBoardingGate(self.gateId)
-            self.gateId = ""
+            self._control.freeBoardingGate(self._gateId)
+            self._gateId = ""
             print("The take-off was successful")
 
-    def activateFlight(self, onGround):
-        res = not self.isActive() and not self.alreadyFlew
-        res = res and not self.aircraft.isInFlight() and not self.aircraft.inManteinance()
-        if onGround and res:
-            self.gateId = self.control.bookBoardingGate(self)
-            res = bool(self.gateId)
+    def activateFlight( self ) -> bool :
+        res = not self.isActive() and not self._alreadyFlew
+        res = res and not self._aircraft.isInFlight() and not self._aircraft.inManteinance()
         if res:
-            self.control.addFlight(self)
-            self.activeFlight = True
-            self.aircraft.activateFlight()
-            print("Flight connected to control tower")
-        else:
-            print("Impossible to activate flight")
+            self._activeFlight = True
+            self._aircraft.activateFlight()
         return res
 
-    def endFlight(self):
+    def endFlight( self ):
         res = self.isActive()
         if res:
-            self.control.deleteFlight(self)
-            self.activeFlight = False
-            self.alreadyFlew = True
-            print("Flight disconnected from the control tower")
-        else:
-            print("Flight unable to disconnect")
+            if ( self._gateId is not None ):
+                self._control.freeBoardingGate( self._gateId )
+            self._control.deleteFlight(self)
+            self._activeFlight = False
+            self._alreadyFlew = True
         return res
 
     def hasItAlreadyFlew(self):
-        return self.alreadyFlew
+        return self._alreadyFlew
 
     def isActive(self):
-        return self.activeFlight
+        return self._activeFlight
 
     def isInAir(self):
-        return not self.gateId
+        return ( self._gateId is None ) and self.isActive();
 
     def hasAvailableSeats(self):
-        return len(self.passengers) < self.aircraft.getAbilityPass()
+        return len(self._passengers) < self._aircraft.getAbilityPass()
 
     def bookSeat(self, passenger):
         res = self.hasAvailableSeats()
         if res:
-            self.passengers.append(passenger)
+            self._passengers.append(passenger)
         else:
-            print("Error: there are not enough seats.")
+            raise Exception("Error: there are not enough seats.")
         return res
 
-    def getBookedSeats(self):
-        return len(self.passengers)
+    def getBookedSeats( self ) -> int :
+        return len(self._passengers)
 
-    def setCoordinates(self, height, latitude, longitude):
-        self.height = height
-        self.latitude = latitude
-        self.longitude = longitude
-
-    def info(self):
-        status = "active" if self.isActive() else "inactive"
+    def __str__(self) -> str :
+        tmp = ["active" if self.isActive() else "inactive"]
         if self.isActive():
-            status += " and flying." if self.isInAir() else f" and assigned to gate {self.gateId}."
-        print(f"Flight {self.flightCode} with {len(self.passengers)} passengers. It goes from {self.origin} to {self.destiny}. It is assigned to the aircraft {self.aircraft.getN_number()}. It's {status}")
+            tmp.append( "and flying." if self.isInAir() else f" and assigned to gate {self._gateId}" )
+        tmp.append(f". Flight {self._flightCode} with {len(self._passengers)} passengers. It goes from {self._origin} to {self._destiny}. It is assigned to the aircraft {self._aircraft.getN_number()}")
+        return " ".join( tmp )
 
-    def infoCord(self):
-        print("------------------------------------------")
-        print(f"Flight {self.flightCode} report:")
-        print(f"- height: {self.height}")
-        print(f"- latitude: {self.latitude}")
-        print(f"- longitude: {self.longitude}")
-        print("------------------------------------------")
+if __name__ == "__main__":
+    av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
+    f1 = Flight( av, [], "cactus-88", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    f2 = Flight( av, [], "cactus-89", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    f3 = Flight( av, [], "cactus-90", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    print(f1)
+    print(f2)
+    print(f3)
+    ct = ControlTower( "cali" );
+    ct.addGate("00", "a")
+    ct.addGate("01", "b")
+    print( ct )
+    f1.activateFlight();
+    ct.addFlight( f1 )
+    f2.activateFlight()
+    ct.addFlight( f2 )
+    print( f1)
+    print( f2 )

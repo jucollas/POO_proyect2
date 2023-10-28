@@ -1,48 +1,62 @@
-from flight import Flight
+from abstract_flight import AbsFlight
+import datetime
 
 
 class BoardingGate:
     def __init__(self, identification: str, location: str) -> None:
-        self.identification = identification
-        self.location = location
-        self.inGate = None
-        self.boardingTime = ""
-        self.history = []
+        self._identification = identification
+        self._location = location
+        self._inGate = None
+        self._history = []
 
-    def get_identification(self) -> str:
-        return self.identification
+    def getIdentification(self) -> str:
+        return self._identification
 
-    def get_location(self) -> str:
-        return self.location
+    def getLocation(self) -> str:
+        return self._location
 
-    def get_history(self) -> list[Flight]:
-        return self.history.copy(); # to prevent weird changes in the self.history log
+    def getHistory(self) -> list[AbsFlight]:
+        return self._history.copy(); # to prevent weird changes in the self.history log
 
-    def get_in_gate(self) -> Flight:
-        return self.inGate
+    def getInGate(self) -> AbsFlight:
+        return self._inGate
 
-    def assign_flight(self, f: Flight) -> bool:
-        res = self.is_available()
+    def assignFlight(self, f: AbsFlight) -> bool:
+        res = self.isAvailable()
         if res:
-            self.inGate = f
-            self.boardingTime = f.get_date()
+            self._inGate = f
         return res
 
-    def dispatch_flight(self) -> None:
-        if self.inGate is not None:
-            self.history.append(self.inGate)
-            self.inGate = None
+    def dispatchFlight(self) -> None:
+        if self._inGate is not None:
+            self._history.append(self._inGate)
+            self._inGate = None
 
-    def is_available(self) -> bool:
-        return self.inGate is None
+    def isAvailable(self) -> bool:
+        return self._inGate is None
 
     def __str__ (self) -> str :
-        info_str = [f"Gate: {self.identification}, located in {self.location}."]
-        if self.inGate is None:
+        info_str = [f"Gate: {self._identification}, located in {self._location}."]
+        if self._inGate is None:
             info_str.append(" It hosts no flight.")
         else:
-            info_str.append(f" It hosts flight with code: {self.inGate.get_flight_code()} at {self.boardingTime}.")
+            info_str.append(f" It hosts flight with code: {self._inGate.getFlightCode()} at {self._inGate.getDate()}.")
         return "".join( info_str );
 
+    def __del__( self ) :
+        for h in self._history:
+            del ( h )
+
+
 if __name__ == "__main__":
-    pass
+    bg = BoardingGate( "puerta 00", "al lado de tu casa" );
+    from flight import Flight
+    from aircraft import Aircraft
+    av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
+    f1 = Flight( av, [], "cactus-88", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
+    print( bg )
+    bg.assign_flight( f1 )
+    print( bg );
+    bg.dispatch_flight();
+    print( bg )
+
