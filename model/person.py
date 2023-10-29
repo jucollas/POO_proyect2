@@ -1,5 +1,6 @@
+import datetime
 class Person:
-    def __init__(self, cedula : str, name : str, surname : str, birthDate : str, genre : str, address : str, phoneNumber : str, email : str):
+    def __init__(self, cedula : str, name : str, surname : str, birthDate : datetime.date, genre : str, address : str, phoneNumber : str, email : str):
         self._cedula = cedula
         self._name = name
         self._surname = surname
