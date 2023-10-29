@@ -9,7 +9,7 @@ class Aircraft:
         self._yearProduction = yearProduction
         self._abilityPass = abilityPass
         self._speedMax = speedMax
-        self._autonomy = autonomy;
+        self._autonomy = autonomy
         self._asociatedFlights : int = 0
         self._inFlight : bool = False
         self._manteinance : bool = False
@@ -17,7 +17,7 @@ class Aircraft:
     # gets
     
     def getN_number( self ) -> str :
-        return self._N_number;
+        return self._N_number
 
     def getBrand(self) -> str :
         return self._brand
