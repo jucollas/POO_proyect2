@@ -27,4 +27,21 @@ def create_aircraft(aircraft_type : str, N_number : str, brand : str, model : st
 	aircraft = AircraftFactory.create_aircraft( aircraft_type, N_number, brand, model, yearProduction, abilityPass, speedMax, autonomy, nRotors = nRotors, liftingCapacity = liftingCapacity, specificUse = specificUse, owner = owner, heightMax = heightMax, nEngines = nEngines, category = category );
 	connect.aircrafts[N_number] = aircraft;
 
+def get_deletable_aircrafts() -> list[str] :
+	res = []
+	for aircraft in connect.aircrafts.values():
+		if ( not aircraft.isInFlight() ):
+			res.append( aircraft.getN_number() );
+	return res
 
+def delete_aircraft( airId : str ) -> None :
+	if ( airId is not None ):
+		del connect.aircrafts[airId]
+
+def get_aircraft_manteinanceInfo( airId : str ) -> None:
+	if ( airId is not None ):
+		return connect.aircrafts[airId].inManteinance();
+def change_manteinance( airId : str, manteinance : bool ) -> None :
+	if ( airId is None ):
+		return;
+	connect.aircrafts[airId].toggleManteinance( manteinance );

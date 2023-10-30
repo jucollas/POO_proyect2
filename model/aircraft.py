@@ -90,17 +90,11 @@ class Aircraft:
             self._inFlight = False
             self._asociatedFlights -= 1
 
-    def putInManteinance(self) -> None :
-        if self.isInFlight() or self.inManteinance():
-            raise Exception("Error: unable to put in manteinance.")
+    def toggleManteinance(self, manteinance : bool ) -> None :
+        if self.isInFlight():
+            raise Exception("Error: unable to toggle manteinance.")
         else:
-            self._manteinance = True
-
-    def endManteinance(self) -> None :
-        if not self.inManteinance():
-            raise Exception("Error: already in manteinance")
-        else:
-            self._manteinance = False
+            self._manteinance = manteinance
 
     def __str__(self) -> str :
         tmp = []
