@@ -18,8 +18,11 @@ class BoardingGate:
     def getHistory(self) -> list[AbsFlight]:
         return self._history.copy(); # to prevent weird changes in the self.history log
 
-    def getInGate(self) -> AbsFlight:
-        return self._inGate
+    def getInGate(self) -> str:
+        if self._inGate is not None:
+            return self._inGate.getFlightCode()
+        else:
+            return None
 
     def assignFlight(self, f: AbsFlight) -> bool:
         res = self.isAvailable()

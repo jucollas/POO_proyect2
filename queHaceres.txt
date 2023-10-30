@@ -7,3 +7,5 @@ connections.py es solo un recurso compartido
 
 Pendientes:
  * Hace falta cumplir el requerimiento que dice que cada avion solo puede tener 	un vuelo saliendo desde Cali
+
+Nota: no se que tan bien haya quedado el display de la historia de las puertas de abordaje

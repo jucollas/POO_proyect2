@@ -12,7 +12,6 @@ def get_airlines():
 	return res;
 
 def delete_airline( name  ) -> None :
-	print( type(name) )
 	if name is not None:
 		del connect.airlines[name]
 

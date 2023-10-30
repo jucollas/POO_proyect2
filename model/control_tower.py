@@ -19,6 +19,9 @@ class ControlTower:
             res.append( f )
         return res
 
+    def getBoardingGates( self ) :
+        return self._gateControl.getGates();
+
     def addFlight(self, f: AbsFlight) -> None:
         self._flights.add( f )
         f.setControlTower( self )
@@ -40,6 +43,9 @@ class ControlTower:
 
     def addGate(self, gateId: str, location: str) -> None:
         self._gateControl.addGate( gateId, location)
+    
+    def deleteGate( self, gateId : str ) -> None:
+        self._gateControl.deleteGate( gateId );
 
     def getFlights( self ) -> set[AbsFlight] :
         return self._flights.copy()

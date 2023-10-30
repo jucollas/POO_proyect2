@@ -5,6 +5,9 @@ class GateControl:
     def __init__(self):
         self._gates : dict[str, BoardingGate] = {}
 
+    def getGates( self ) -> dict[str, BoardingGate]:
+        return self._gates.copy()
+
     def bookBoardingGate(self, flight : AbsFlight ) -> str :
         for gate in self._gates.values():
             if gate.isAvailable():
@@ -26,7 +29,12 @@ class GateControl:
 
     def deleteGate( self, gateId : str ) -> None :
         if ( gateId in self._gates ):
-            del ( self._gates[gateId] );
+            if ( self._gates[gateId].isAvailable() ):
+                del ( self._gates[gateId] );
+            else:
+                raise Exception( "Error: the gate with id %s has a flight identified as %s." % ( gateId, self._gates[gateId].getInGate() ) );
+        else: 
+            raise Exception( "Error: the id %s is not part of the boarding gates" % ( gateId ) );
 
     def __str__(self) -> str :
         tmp = [ f"There are {len(self._gates)} gates:" ]

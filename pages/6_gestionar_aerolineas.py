@@ -8,7 +8,7 @@ st.set_page_config(
 )
 
 st.write( "Aerolineas" )
-st.dataframe( controller.get_airlines(), use_container_width = False, column_config = {"":"Nombre aerolinea","value":"vuelos asignados"} )
+st.dataframe( controller.get_airlines(), use_container_width = True, column_config = {"":"Nombre aerolinea","value":"vuelos asignados"} )
 
 seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Aerolinea", "Eliminar Aerolinea"]);
 
