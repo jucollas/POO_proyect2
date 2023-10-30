@@ -1,5 +1,5 @@
-from aircraft import Aircraft
-from person import Person
+from model.aircraft import Aircraft
+from model.person import Person
 
 class Jet(Aircraft):
     def __init__(self, aircraft : Aircraft, owner : Person):

@@ -1,4 +1,4 @@
-from abstract_flight import AbsFlight
+from model.abstract_flight import AbsFlight
 import datetime
 
 

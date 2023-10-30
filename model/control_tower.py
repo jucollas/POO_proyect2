@@ -1,7 +1,7 @@
 
-from abstract_flight import AbsFlight
-from message import Message
-from gate_control import GateControl
+from model.abstract_flight import AbsFlight
+from model.message import Message
+from model.gate_control import GateControl
 
 
 class ControlTower:

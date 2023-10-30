@@ -1,8 +1,8 @@
-from helicopter import Helicopter
-from plane import Plane
-from jet import Jet
-from aircraft import Aircraft
-from person import Person
+from model.helicopter import Helicopter
+from model.plane import Plane
+from model.jet import Jet
+from model.aircraft import Aircraft
+from model.person import Person
 
 class AircraftFactory:
     @staticmethod
