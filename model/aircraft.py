@@ -109,8 +109,8 @@ class Aircraft:
         tmp.append("Ability to Passengers: %d" %(self.getAbilityPass()))
         tmp.append("Maximum Speed: %d" %(self.getSpeedMax()))
         tmp.append("Autonomy: %d" %(self.getAutonomy()))
-        return ". ".join( tmp );
+        return ". ".join( tmp )
 
 if __name__ == "__main__":
     av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
-    print( av );
+    print( av )

@@ -35,6 +35,6 @@ class Plane(Aircraft):
         return "".join( tmp );
 
 if __name__ == "__main__":
-    av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
-    pl = Plane( av, 10, 2, "comercial"  );
-    print( pl );
+    av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  )
+    pl = Plane( av, 10, 2, "comercial"  )
+    print( pl )
