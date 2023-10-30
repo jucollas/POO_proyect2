@@ -3,7 +3,7 @@ airlines = {}
 cities = {}
 aircrafts = {}
 disconnectedFlights = {}
-
+crewMembers = {}
 
 if __name__ == "__main__":
 	print( Resources.hola())
