@@ -1,5 +1,5 @@
-from abstract_flight import AbsFlight
-from boarding_gate import BoardingGate
+from model.abstract_flight import AbsFlight
+from model.boarding_gate import BoardingGate
 
 class GateControl:
     def __init__(self):

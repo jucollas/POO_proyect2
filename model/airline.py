@@ -1,6 +1,7 @@
-import connections
-from flight import Flight
-from passenger import Passenger
+
+import model.connections
+from model.flight import Flight
+from model.passenger import Passenger
 import datetime
 
 class Airline:
@@ -10,6 +11,9 @@ class Airline:
 
     def getName( self ) -> str :
         return self._name
+
+    def getAmountFlights( self ) -> int :
+        return len( self._scheduled_flights );
 
     def scheduleFlight(self, flight_id: str, passenger: Passenger) -> bool:
         res = False
@@ -80,6 +84,7 @@ if __name__ == "__main__":
     f1.land()
     print(ct)
     f1.endFlight()
-    print(ct) 
+    print(ct)
+    print(airlines)
 
 

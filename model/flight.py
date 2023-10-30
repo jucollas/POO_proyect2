@@ -1,11 +1,11 @@
-from message import Message
-from person import Person
-from passenger import Passenger
-from crew import Crew
-from aircraft import Aircraft
 
-from abstract_flight import AbsFlight
-from control_tower import ControlTower
+from model.message import Message
+from model.person import Person
+from model.passenger import Passenger
+from model.crew import Crew
+from model.aircraft import Aircraft
+from model.abstract_flight import AbsFlight
+from model.control_tower import ControlTower
 
 
 import random

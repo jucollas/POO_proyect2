@@ -1,4 +1,4 @@
-from aircraft import Aircraft
+from model.aircraft import Aircraft
 
 class Helicopter(Aircraft):
     def __init__(self, aircraft : Aircraft, nRotors : int, liftingCapacity : int, specificUse : str) -> 'Helicopter':

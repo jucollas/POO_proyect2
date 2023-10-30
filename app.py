@@ -23,7 +23,7 @@ def admin_menu():
 
 # Definir una función para el menú de cliente
 def client_menu():
-    
+    controller = Airport_Controller()
     st.subheader("Menú de Cliente")
     client_option = st.selectbox("Selecciona una opción:", ["Administrar Cliente", "Comprar Vuelos", "Filtrar Vuelos"])
     if client_option == "Administrar Cliente":
@@ -36,11 +36,19 @@ def client_menu():
         # Lógica para filtrar vuelos
         st.write("Aquí puedes filtrar vuelos disponibles.")
 
+
+
+#configura el logo que aparece junto al boton de cerrar la camara
+st.set_page_config(
+    page_title = "aeropuerto",
+    page_icon = ":airplane_departure:"
+)
+
 # Configurar el título de la aplicación
-st.title('Menú del Aeropuerto')
+st.sidebar.title('Menú del Aeropuerto')
 
 # Determinar si el usuario es administrador o cliente (simulado aquí por simplicidad)
-user_type = st.radio("¿Eres un administrador o un cliente?", ["Administrador", "Cliente"])
+user_type = st.sidebar.radio("¿Eres un administrador o un cliente?", ["Administrador", "Cliente"])
 
 if user_type == "Administrador":
     admin_menu()
