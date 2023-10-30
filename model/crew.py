@@ -1,4 +1,4 @@
-from person import Person
+from model.person import Person
 
 class Crew(Person):
     def __init__(self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int):

@@ -1,9 +1,10 @@
 import streamlit as st
 from controller.airport_controller import Airport_Controller
-from view.view_admin import create_person
+from view.view_admin import create_crew
 
 # Definir una función para el menú de administrador
 def admin_menu():
+    controller = Airport_Controller()
     st.subheader("Menú de Administrador")
     admin_option = st.selectbox("Selecciona una opción:", ["Administrar Aeronave", "Administrar Vuelos", "Administrar Tripulación", "Administrar Puertas de Abordaje"])
     if admin_option == "Administrar Aeronave":
@@ -14,6 +15,7 @@ def admin_menu():
         st.write("Aquí puedes administrar vuelos.")
     elif admin_option == "Administrar Tripulación":
         # Lógica para administrar tripulación
+        create_crew(controller)
         st.write("Aquí puedes administrar la tripulación.")
     elif admin_option == "Administrar Puertas de Abordaje":
         # Lógica para administrar puertas de abordaje
@@ -21,11 +23,11 @@ def admin_menu():
 
 # Definir una función para el menú de cliente
 def client_menu():
-    controller = Airport_Controller
+    
     st.subheader("Menú de Cliente")
     client_option = st.selectbox("Selecciona una opción:", ["Administrar Cliente", "Comprar Vuelos", "Filtrar Vuelos"])
     if client_option == "Administrar Cliente":
-        create_person(controller)
+        #create_person(controller)
         st.write("Aquí puedes administrar tus datos de cliente.")
     elif client_option == "Comprar Vuelos":
         # Lógica para comprar vuelos
