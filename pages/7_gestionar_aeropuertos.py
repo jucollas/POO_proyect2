@@ -7,7 +7,7 @@ st.set_page_config(
     page_icon = ":toolbox:"
 )
 st.write( "Aeropuertos" )
-st.dataframe( controller.get_airports(), use_container_width = True )
+st.dataframe( controller.get_airports(), use_container_width = True, column_config = { "value" : "Ciudad del Aeropuerto " } )
 
 seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Aeropuerto", "Eliminar Aeropuerto"]);
 
