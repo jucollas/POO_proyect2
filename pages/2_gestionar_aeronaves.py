@@ -46,7 +46,7 @@ elif ( seleccion == "Eliminar Aeronave" ):
     if ( st.button( "Eliminar" ) ):
         controller.delete_aircraft( elim );
 elif ( seleccion == "Mantenimiento" ):
-    craft = st.selectbox( "¿Cual quieres poner/quitar de mantenimiento?", controller.get_deletable_aircrafts() );
+    craft = st.selectbox( "¿Cual quieres poner/quitar de mantenimiento?", controller.get_manteinable_aircrafts() );
     manteinance = st.toggle( "Mantenimiento", value = controller.get_aircraft_manteinanceInfo( craft ) );
     if ( st.button( "Realizar Cambio" ) ):
         controller.change_manteinance( craft, manteinance );

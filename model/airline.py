@@ -1,5 +1,5 @@
 
-import model.connections
+import model.connections as connections
 from model.flight import Flight
 from model.passenger import Passenger
 import datetime
@@ -14,6 +14,12 @@ class Airline:
 
     def getAmountFlights( self ) -> int :
         return len( self._scheduled_flights );
+
+    def getFlights( self ) :
+        res = []
+        for f in self._scheduled_flights.values():
+            res.append( f );
+        return res;
 
     def scheduleFlight(self, flight_id: str, passenger: Passenger) -> bool:
         res = False
@@ -38,6 +44,9 @@ class Airline:
     def addFlight(self, flight: Flight) -> None:
         self._scheduled_flights[flight.getFlightCode()] = flight
 
+    def deleteFlight( self, flightId : str ) -> None :
+        del self._scheduled_flights[flightId];
+
     def activateFlight( self, flightId : str ) -> None :
         if flightId in self._scheduled_flights:
             flight = self._scheduled_flights[flightId]
@@ -45,8 +54,6 @@ class Airline:
             if ( flight.getOrigin() in connections.cities ):
                 connections.cities[flight.getOrigin()].addFlight( flight )
                 flight.setBoardingGate( connections.cities[flight.getOrigin()].bookBoardingGate( flight ) )
-            else:
-                disconnectedFlights[flightsId] = flight
             del self._scheduled_flights[flightId]
 
 

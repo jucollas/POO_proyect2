@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from model.message import Message
+if __name__ != "__main__":
+	from model.message import Message
 
 
 
@@ -7,6 +8,10 @@ class AbsFlight(ABC):
 
 	@abstractmethod
 	def receiveMessage(self, message : Message ) -> None :
+		pass
+
+	@abstractmethod
+	def getFlightCode( self ) -> str :
 		pass
 
 if __name__ == "__main__":

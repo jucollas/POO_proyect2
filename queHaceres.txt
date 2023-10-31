@@ -1,13 +1,29 @@
-Nota: hay que quitar todos los print que se encuentran en Flight (en operaciones como 'land' y 'takeOff'p
+Notas:
 
+connections.py es solo un recurso compartido que contiene los aeropuertos, aeronaves y aerolineas
 
-La clase 'Fligt' se hace responsable de liberar su espacio en la boarding Gate cuando esta se desactiva, sin embargo no es responsable cuando se activa.
+Labores Pendientes:
 
-connections.py es solo un recurso compartido
+ * Hace falta cumplir el requerimiento que dice que cada avion solo puede tener
+ 	un vuelo saliendo desde Cali
 
-Pendientes:
- * Hace falta cumplir el requerimiento que dice que cada avion solo puede tener 	un vuelo saliendo desde Cali
+ * Hay que quitar todos los print que se encuentran en Flight (en
+	operaciones como 'land' y 'takeOff'p
 
-Nota: no se que tan bien haya quedado el display de la historia de las puertas de abordaje
+ * revisar el display de la historia de las puertas de abordaje
 
-en el archivo 2_gestionar_aeronave.py hace falta cuadrar la categoria de los aviones y el uso especifico. Ademas, falta poder consultar/modificar informacion particular de cada tipod e aeronave. Falta tambien hacer el cuestionario del dueño del jet
+ * en el archivo 2_gestionar_aeronave.py hace falta cuadrar la categoria de los
+ 	aviones y el uso especifico. Ademas, falta poder consultar/modificar 
+	informacion particular de cada tipod e aeronave. Falta tambien hacer el
+ 	cuestionario del dueño del jet
+
+ * archivo flight_controller: mejorar la contidion para verificar la no 
+	repeticion de codigos de vuelo (linea 66)
+
+ * archivo gestionar_vuelos: hacer la parte de dar informacion
+
+ * Modificar las condiciones para 'activar' y 'aterrizar' vuelos para que
+	consiederen los casos en donde no hayan puertas de abordaje disponibles
+	en el aeropuerto
+ * Revisar las responsabilidades de la clase 'flight' ¿deberia seguir 
+	teniendo acceso al 'ControlTOwer'?

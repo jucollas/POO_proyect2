@@ -30,13 +30,20 @@ def create_aircraft(aircraft_type : str, N_number : str, brand : str, model : st
 def get_deletable_aircrafts() -> list[str] :
 	res = []
 	for aircraft in connect.aircrafts.values():
-		if ( not aircraft.isInFlight() ):
+		if ( not aircraft.isInFlight() and aircraft.getAsociatedFlights() == 0 ):
 			res.append( aircraft.getN_number() );
 	return res
 
 def delete_aircraft( airId : str ) -> None :
 	if ( airId is not None ):
 		del connect.aircrafts[airId]
+
+def get_manteinable_aircrafts() -> list[str] :
+	res = []
+	for aircraft in connect.aircrafts.values():
+		if ( not aircraft.isInFlight() ):
+			res.append( aircraft.getN_number() );
+	return res
 
 def get_aircraft_manteinanceInfo( airId : str ) -> None:
 	if ( airId is not None ):

@@ -79,18 +79,11 @@ class Flight(AbsFlight):
             print(f"{self.flightCode} received the message: %s" % ( str( message ) ) )
 
     def land (self ) -> None :
-        if not self.isActive():
-            print("The flight is not active")
-        elif not self.isInAir():
-            print("Was already on land")
-        elif self._control is None:
-            print( "No control tower connected" )
+        self._gateId = self._control.bookBoardingGate(self)
+        if self._gateId is None:
+            print("Unable to land")
         else:
-            self._gateId = self._control.bookBoardingGate(self)
-            if not self._gateId:
-                print("Unable to land")
-            else:
-                print(f"Landed. The assigned boarding gate is: {self._gateId}")
+            print(f"Landed. The assigned boarding gate is: {self._gateId}")
 
     def takeOff(self):
         if not self.isActive():
@@ -115,7 +108,6 @@ class Flight(AbsFlight):
         if res:
             if ( self._gateId is not None ):
                 self._control.freeBoardingGate( self._gateId )
-            self._control.deleteFlight(self)
             self._activeFlight = False
             self._alreadyFlew = True
         return res
