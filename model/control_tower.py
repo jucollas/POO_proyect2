@@ -1,28 +1,33 @@
 
-from model.abstract_flight import AbsFlight
+from model.flight import Flight
+
 from model.message import Message
 from model.gate_control import GateControl
-import model.connections as connect
 
 class ControlTower:
     def __init__( self, city : str ):
-        self._flights : dic[ str ,AbsFlight] = {}
+        self._flights : dic[ str ,Flight] = {}
         self._gateControl = GateControl()
         self._city = city;
 
     def getCity( self ) -> str :
         return self._city
 
-    def getFlights( self ) -> list[AbsFlight] :
+    def getFlights( self ) -> list[Flight] :
         res = []
         for f in self._flights.values():
             res.append( f )
         return res
 
+    def getAmountFlights( self ) -> int:
+        return len( self._flights );
+
     def getBoardingGates( self ) :
         return self._gateControl.getGates();
 
-    def addFlight(self, f: AbsFlight) -> None:
+    def addFlight(self, f: Flight) -> None:
+        if ( f.getOrigin() == self._city ):
+            f.setBoardingGate( self.bookBoardingGate( f ) );
         self._flights[f.getFlightCode()] = f 
         f.setControlTower( self )
 
@@ -36,7 +41,7 @@ class ControlTower:
         for f in self._flights.values():
             f.receiveMessage(m)
 
-    def bookBoardingGate(self, f: AbsFlight) -> str:
+    def bookBoardingGate(self, f: Flight) -> str:
         return self._gateControl.bookBoardingGate( f )
 
     def freeBoardingGate(self, gate_id: str) -> None:
@@ -48,27 +53,25 @@ class ControlTower:
     def deleteGate( self, gateId : str ) -> None:
         self._gateControl.deleteGate( gateId );
 
+    def isAvailableGate( self ) -> bool :
+        return self._gateControl.isAvailableGate();
+
     def flightTakeOff( self, flightId : str ) -> None :
+        self.freeBoardingGate( self._flights[flightId].getGateId() );
         self._flights[flightId].takeOff();
 
     def flightLand( self, flightId : str  ) -> None : 
+        self._flights[flightId].setBoardingGate( self.bookBoardingGate( self._flights[flightId] ) );
         self._flights[flightId].land()
 
     def endFlight( self, flightId : str ) -> None : 
+        self.freeBoardingGate( self._flights[flightId].getGateId() );
         self._flights[flightId].endFlight()
-
         self.deleteFlight( flightId )
 
     def continueFlight( self, flightId : str ) -> None :
         flight = self._flights[flightId]
         self.deleteFlight( flightId )
-        if ( flight.getDestiny() in connect.cities ):
-            flight.setControlTower( connect.cities[flight.getDestiny()] )
-            connect.cities[flight.getDestiny()].addFlight( flight )
-        else:
-            flight.endFlight();
-
-
 
     def __str__( self ) -> str:
         tmp = [ f"There are {len(self._flights)} flights connected to the control tower." ]

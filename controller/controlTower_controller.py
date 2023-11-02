@@ -1,15 +1,23 @@
-from model.control_tower import ControlTower
-import model.connections as connect
+from controller.airport_controller import AirportController
 
-def create_airport( name : str ) -> None:
-	connect.cities[name] = ControlTower( name );
+def ControlTowerController():
+	
+	def __init__ ( self ):
+		self._data = AirportController();
 
-def get_airports() -> list[str]:
-	res = [];
-	for airport in connect.cities.values():
-		res.append( airport.getCity() );
-	return res
+	def create_airport( self, name : str ) -> None:
+		self._data.create_airport( name )
 
-def delete_airport( name : str  ) -> None :
-	if ( name is not None ):
-		del connect.cities[name];
+	def get_airports(self) -> list[str]:
+		return self._data.get_airports()
+
+	def get_deletable_airports( self ):
+		res = [];
+		tmp = self._data.get_airports();
+		for index in range(len(tmp)):
+			if ( tmp[index][1] == 0 ):
+				res.append( tmp[0] );
+		return res;
+
+	def delete_airport( self, name : str  ) -> None :
+		self._data.delete_airport( name );

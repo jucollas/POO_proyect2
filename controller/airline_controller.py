@@ -1,28 +1,26 @@
-from model.airline import Airline
+from controller.airport_controller import AirportController
 
 class AirlineController():
 
-	def __init__(self) -> None:
-		self._airlines : dict[str , Airline] = {} 
+	def __init__( self ):
+		self._data = AirportController();
 		
 	def create_airline(self, name : str ) -> None :
-		self._airlines[name] = Airline( name )
+		self._data.create_airline( name );
 
-	def get_airlines(self) -> dict[str : int]:
-		ans = {}
-		for value in self._airlines.values():
-			ans[value.getName()] =  value.getAmountFlights()
-		return ans
-	
-	def get_airline_flights(self, name : str) -> dict[str : dict[str : None]]:
-		return self._airlines[name].getFlights()
+	def get_airlines(self):
+		return self._data.get_airlines()
+
+	def get_deletable_airlines( self ):
+		res = []
+		tmp = self._data.get_airlines()
+		for i in range( len(tmp)):
+			if ( tmp[i][1] == 0 ):
+				res.append( tmp[i][0] )
+		return res;
 
 	def delete_airline(self, name : str ) -> None :
-		if name in self._airlines:
-			del self._airlines[name]
-
-	def delete_airline_flight(self, name_airline : str, flightId : str ) -> None :
-		self._airlines[name_airline].deleteFlight(flightId)
+		self._data.delete_airline( name );
 
 if __name__ == "__main__":
 	pass

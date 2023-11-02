@@ -4,18 +4,16 @@ from model.person import Person
 from model.passenger import Passenger
 from model.crew import Crew
 from model.aircraft import Aircraft
-from model.abstract_flight import AbsFlight
-from model.control_tower import ControlTower
+
 
 
 import random
 import time
 import datetime
 
-class Flight(AbsFlight):
+class Flight():
     def __init__(self, aircraft : Aircraft, crewMates : list[Crew], flightCode : str, date : datetime.date, origin : str, destiny : str ):
         self._aircraft = aircraft
-        self._control : ControlTower = None
         self._flightCode = flightCode
         self._date = date
         self._origin = origin
@@ -55,62 +53,46 @@ class Flight(AbsFlight):
 
     # set
 
-    def setControlTower( self, controlTower ) -> None :
-        self._control = controlTower
-
     def setBoardingGate( self, boardingGate ) -> None :
         self._gateId = boardingGate
 
     # functiones
 
-    def sendFlightInformation(self) -> None :
+    def getFlightInformation(self) -> Message :
         if not self.isActive() or self._control is None :
-            return
-
+            return None;
         random.seed(time.time())
         latitude = round(random.uniform(-90, 90), 2)
         height = random.randint(-9000, 9000)
         longitude = round(random.uniform(-180, 180), 2)
         message = Message(longitude, latitude, height, self.flightCode)
-        self._control.notifyFlights(message)
+        return message;
 
     def receiveMessage( self, message : Message ) -> None :
         if message.flightCode != self.flightCode:
             print(f"{self.flightCode} received the message: %s" % ( str( message ) ) )
 
     def land (self ) -> None :
-        self._gateId = self._control.bookBoardingGate(self)
-        if self._gateId is None:
-            print("Unable to land")
-        else:
-            print(f"Landed. The assigned boarding gate is: {self._gateId}")
+        pass
 
-    def takeOff(self):
-        if not self.isActive():
-            print("The flight is not active")
-        elif self.isInAir():
-            print("The flight is already in the air")
-        else:
-            self._control.freeBoardingGate(self._gateId)
-            self._gateId = None
-            print("The take-off was successful")
+    def takeOff(self) -> None :
+        self._gateId = None;
 
-    def activateFlight( self ) -> bool :
-        res = not self.isActive() and not self._alreadyFlew
-        res = res and not self._aircraft.isInFlight() and not self._aircraft.inManteinance()
-        if res:
+    def activateFlight( self ):
+        if not self.isActive() and not self._alreadyFlew and not self._aircraft.isInFlight() and not self._aircraft.inManteinance():
             self._activeFlight = True
             self._aircraft.activateFlight()
-        return res
+        else:
+            raise Exception( "Error: Impossible to activate Flight" );
 
     def endFlight( self ):
-        res = self.isActive()
-        if res:
-            if ( self._gateId is not None ):
-                self._control.freeBoardingGate( self._gateId )
+        if self.isActive():
+            self._gateId = None
             self._activeFlight = False
             self._alreadyFlew = True
-        return res
+        else:
+            raise Exception( "Error: Impossible to end Flight" );
+
 
     def disconnectFlight( self ):
         if ( self._control is not None ):

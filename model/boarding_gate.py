@@ -1,4 +1,4 @@
-from model.abstract_flight import AbsFlight
+from model.flight import Flight
 import datetime
 
 
@@ -15,8 +15,11 @@ class BoardingGate:
     def getLocation(self) -> str:
         return self._location
 
-    def getHistory(self) -> list[AbsFlight]:
-        return self._history.copy(); # to prevent weird changes in the self.history log
+    def getHistory(self):
+        res = []
+        for f in self._history:
+            res.append( f.getFlightCode() );
+        return res;
 
     def getInGate(self) -> str:
         if self._inGate is not None:
@@ -24,7 +27,7 @@ class BoardingGate:
         else:
             return None
 
-    def assignFlight(self, f: AbsFlight) -> bool:
+    def assignFlight(self, f: Flight) -> bool:
         res = self.isAvailable()
         if res:
             self._inGate = f

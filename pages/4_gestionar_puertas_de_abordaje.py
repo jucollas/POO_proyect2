@@ -1,5 +1,7 @@
 import streamlit as st
-import controller.boardingGate_controller as controller
+from controller.boardingGate_controller import BoardingGate_Controller
+
+controller = BoardingGate_Controller()
 
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(

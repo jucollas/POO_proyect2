@@ -1,7 +1,4 @@
-if __name__ == "__main__" or __name__ == "plane":
-    from aircraft import Aircraft
-else:
-    from model.aircraft import Aircraft
+from model.aircraft import Aircraft
 
 class Plane(Aircraft):
     def __init__(self, aircraft : Aircraft, heightMax : int, nEngines : int, category : str):

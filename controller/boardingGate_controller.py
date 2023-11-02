@@ -1,39 +1,36 @@
-import model.connections as connect
-from model.control_tower import ControlTower
-from view.errorMessage import errorMessage
+from controller.airport_controller import AirportController
 
+class BoardingGate_Controller():
 
-def get_cities() -> list[str] :
-	res = []
-	for city in connect.cities.values():
-		res.append( city.getCity() );
-	return res;
+	def __init__( self ):
+		self._data = AirportController();
 
-def get_boardingGates( city : str ) :
-	if city is None:
-		return {};
-	res = [];
-	boardingGates = connect.cities[city].getBoardingGates();
-	for gate in boardingGates.values():
-		history = []
-		for h in gate.getHistory():
-			history.append( h.getFlightCode() );
-		res.append( ( gate.getIdentification(), gate.getLocation(), gate.getInGate(), history  ) );
-	return res;
+	def get_cities( self ) -> list[str] :
+		tmp = self._data.get_airports();
+		res = [ a[0] for a in tmp ];
+		return res;
 
-def create_boardingGate( city : str, ident : str, loc : str ) -> None :
-	if ident in connect.cities[city].getBoardingGates() : 
-		errorMessage( "Error: The id %s is already taken in the city %s." % ( ident, city ) );
-	else:
-		connect.cities[city].addGate( ident, loc );
+	def get_boardingGates( self, city : str ) :
+		if city is None:
+			return [];
+		return self._data.get_boardingGates( city );
 
-def delete_boardingGate( city : str, id : str ) -> None :
-	connect.cities[city].deleteGate( id );
+	def create_boardingGate( self, city : str, ident : str, loc : str ) -> None :
+		if city is None:
+			return;
+		self._data.create_boardingGate( ident, loc )
 
-def get_deletable_gates( city : str ) -> list[str] :
-	res = []
-	boardingGates = connect.cities[city].getBoardingGates();
-	for gate in boardingGates.values():
-		if gate.isAvailable():
-			res.append( gate.getIdentification() );
-	return res;
+	def delete_boardingGate( self, city : str, ide: str ) -> None :
+		if city is None:
+			return;
+		self._data.delete_boardingGate( ide );
+
+	def get_deletable_gates( self, city : str ) -> list[str] :
+		if city is None:
+			return [];
+		res = []
+		tmp = self._data.get_boardingGates();
+		for index in range(len(tmp)):
+			if ( tmp[index][2] is None ):
+				res.append( tmp[index][0] )
+		return res;

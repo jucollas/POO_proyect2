@@ -1,4 +1,5 @@
-from model.abstract_flight import AbsFlight
+from model.flight import Flight
+
 from model.boarding_gate import BoardingGate
 
 class GateControl:
@@ -8,7 +9,7 @@ class GateControl:
     def getGates( self ) -> dict[str, BoardingGate]:
         return self._gates.copy()
 
-    def bookBoardingGate(self, flight : AbsFlight ) -> str :
+    def bookBoardingGate(self, flight : Flight ) -> str :
         for gate in self._gates.values():
             if gate.isAvailable():
                 if gate.assignFlight(flight):
@@ -35,6 +36,12 @@ class GateControl:
                 raise Exception( "Error: the gate with id %s has a flight identified as %s." % ( gateId, self._gates[gateId].getInGate() ) );
         else: 
             raise Exception( "Error: the id %s is not part of the boarding gates" % ( gateId ) );
+
+    def isAvailableGate( self ) -> bool :
+        for gate in self._gates.values():
+            if ( gate.isAvailable() ):
+                return True
+        return False
 
     def __str__(self) -> str :
         tmp = [ f"There are {len(self._gates)} gates:" ]

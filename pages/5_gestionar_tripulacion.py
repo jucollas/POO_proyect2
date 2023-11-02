@@ -1,6 +1,8 @@
 import streamlit as st
-import controller.crew_controller as controller
+from controller.crew_controller import CrewController
 from view.forms import crewForm
+
+controller = CrewController()
 
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
@@ -15,7 +17,7 @@ st.dataframe( controller.get_crewMembers(), use_container_width = True, hide_ind
 
 seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Miembro de la Tripulacion", "Eliminar Miembro de la Tripulacion"] );
 if ( seleccion == "Crear Miembro de la Tripulacion" ):
-    controller.create_crewMember( crewForm( "Crear tripulante" ) )
+    crewForm( controller, "Crear tripulante" )
 elif ( seleccion == "Eliminar Miembro de la Tripulacion" ):
     elim = st.selectbox( "¿Cual quieres eliminar?", controller.get_crew_id() )
     if ( st.button( "Eliminar" ) ):

@@ -1,4 +1,3 @@
-import model.connections as connections
 from model.flight import Flight
 from model.passenger import Passenger
 import datetime
@@ -50,9 +49,6 @@ class Airline:
         if flightId in self._scheduled_flights:
             flight = self._scheduled_flights[flightId]
             flight.activateFlight();
-            if ( flight.getOrigin() in connections.cities ):
-                connections.cities[flight.getOrigin()].addFlight( flight )
-                flight.setBoardingGate( connections.cities[flight.getOrigin()].bookBoardingGate( flight ) )
             del self._scheduled_flights[flightId]
 
 

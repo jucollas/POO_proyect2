@@ -1,29 +1,23 @@
-import model.connections as connect
-from model.crew import Crew
+from controller.airport_controller import AirportController
 from view.errorMessage import errorMessage
 
-def get_crewMembers() -> list[(str)] :
-	res = []
-	for member in connect.crewMembers.values() :
-		res.append( ( member.getCedula(), member.getName(), member.getSurname(), member.getBirthDate(), member.getGenre(), member.getAddress(), member.getPhoneNumber(), member.getEmail(), member.getJobPosition(), member.getDailyWorkingHours(), member.getYearsExperience() ) );
-	return res;
+class CrewController():
 
-def get_crew_id() -> list[str] :
-	res = []
-	for member in connect.crewMembers.values() :
-		res.append( member.getCedula() );
-	return res;
+	def __init__( self ):
+		self._data = AirportController()
 
-def create_crewMember( miembro : Crew ) ->None :
-	if ( miembro is None ):
-		return;
-	elif ( miembro.getCedula() in connect.crewMembers ):
-		errorMessage( "Error: la cedula %s ya esta utilizada por un miembro de la tripulacion." % ( miembro.getCedula() ) )
-		return;
-	connect.crewMembers[miembro.getCedula()] = miembro;
+	def get_crewMembers(self) -> list[(str)] :
+		return self._data.get_crews();
 
-def delete_crewMember( cedula : str ) -> None :
-	if ( cedula not in connect.crewMembers ):
-		errorMessage( "Error: no existe ningun miembro de la tripulacion con cedula %s." % ( cedula ) )
-		return;
-	del connect.crewMembers[cedula]
+	def get_crew_id(self) -> list[str] :
+		res = []
+		tmp = self._data.get_crews();
+		for member in tmp :
+			res.append( member[0] );
+		return res;
+
+	def create_crewMember(self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int ) ->None :
+		self._data.create_crew( cedula, name, surname, birthDate, genre, address, phoneNumber, email, jobPosition, dailyWorkingHours, yearsExperience )
+
+	def delete_crewMember(self, cedula : str ) -> None :
+		self._data.delete_crew( cedula)

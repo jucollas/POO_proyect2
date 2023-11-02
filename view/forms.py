@@ -24,7 +24,7 @@ def personForm() -> dict[str, str] :
 	}
 	return person_data
 
-def crewForm(controller :  ,  name : str = "Formulario tripulante" ) -> None :
+def crewForm(controller ,  name : str = "Formulario tripulante" ) -> None :
 	with st.form( name ):
 		st.write( name )
 		crew_data = personForm()
@@ -35,7 +35,7 @@ def crewForm(controller :  ,  name : str = "Formulario tripulante" ) -> None :
 		crew_data['dailyWorkingHours'] = dailyWorkingHours
 		crew_data['yearsExperience'] = yearsExperience
 		if ( st.form_submit_button( "Guardar" ) ):
-			controller.create_crew(**crew_data)
+			controller.create_crewMember(**crew_data)
 			 
 
 if __name__ == "__main__":

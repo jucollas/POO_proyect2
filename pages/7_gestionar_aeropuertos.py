@@ -1,5 +1,7 @@
 import streamlit as st
-import controller.controlTower_controller as controller
+from controller.controlTower_controller import ControlTowerController
+
+controller = ControlTowerController()
 
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
@@ -7,7 +9,7 @@ st.set_page_config(
     page_icon = ":toolbox:"
 )
 st.write( "Aeropuertos" )
-st.dataframe( controller.get_airports(), use_container_width = True, column_config = { "value" : "Ciudad del Aeropuerto " } )
+st.dataframe( controller.get_airports(), use_container_width = True, hide_index = True, column_config = { 0 : "Ciudad del Aeropuerto ", 1 : "Cantidad de vuelos asociados" } )
 
 seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Aeropuerto", "Eliminar Aeropuerto"]);
 
@@ -18,6 +20,6 @@ if ( seleccion ==  "Crear Aeropuerto" ) :
             controller.create_airport( name );
 
 elif ( seleccion == "Eliminar Aeropuerto"):
-    elim = st.selectbox( "¿Cual quieres eliminar?", controller.get_airports() )
+    elim = st.selectbox( "¿Cual quieres eliminar?", controller.get_deletable_airports() )
     if ( st.button( "Eliminar" ) ):
-        controller.delete_airport( elim );
+        controllerAirdelete_airport( elim );
