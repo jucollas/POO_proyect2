@@ -1,4 +1,3 @@
-
 import model.connections as connections
 from model.flight import Flight
 from model.passenger import Passenger
@@ -13,13 +12,13 @@ class Airline:
         return self._name
 
     def getAmountFlights( self ) -> int :
-        return len( self._scheduled_flights );
+        return len( self._scheduled_flights )
 
-    def getFlights( self ) :
-        res = []
+    def getFlights( self ) -> dict[str : dict[str : None]] :
+        ans = {}
         for f in self._scheduled_flights.values():
-            res.append( f );
-        return res;
+            ans[f.getFlightCode()] = vars(f)
+        return ans
 
     def scheduleFlight(self, flight_id: str, passenger: Passenger) -> bool:
         res = False

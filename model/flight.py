@@ -15,8 +15,7 @@ import datetime
 class Flight(AbsFlight):
     def __init__(self, aircraft : Aircraft, crewMates : list[Crew], flightCode : str, date : datetime.date, origin : str, destiny : str ):
         self._aircraft = aircraft
-        self._control = None
-        self._crewMates = crewMates
+        self._control : ControlTower = None
         self._flightCode = flightCode
         self._date = date
         self._origin = origin
@@ -24,12 +23,13 @@ class Flight(AbsFlight):
         self._activeFlight = False
         self._alreadyFlew = False
         self._gateId = None
-        self._passengers = []
+        self._passengers = {}
+        self._crewMates = {}
         aircraft.assignFlight()
 
     # get
     
-    def getGateId(self):
+    def getGateId(self) -> str:
         return self._gateId
 
     def getFlightCode(self) -> str :
@@ -47,7 +47,7 @@ class Flight(AbsFlight):
     def getAircraft(self) -> Aircraft :
         return self._aircraft
 
-    def getPassengers(self) -> list[Passenger] :
+    def getPassengers(self) -> dict[Passenger] :
         return self._passengers.copy() # para evitar cambios raros en self._passengers
 
     def getCrewMates(self) -> list[Crew] :
@@ -128,14 +128,25 @@ class Flight(AbsFlight):
     def hasAvailableSeats(self):
         return len(self._passengers) < self._aircraft.getAbilityPass()
 
-    def bookSeat(self, passenger):
+    def bookSeat(self, passenger : Passenger) -> bool:
         res = self.hasAvailableSeats()
         if res:
-            self._passengers.append(passenger)
+            self._passengers[passenger.getCedula()] = passenger
         else:
             raise Exception("Error: there are not enough seats.")
         return res
-
+    
+    # Valida que un tripulante se encuentre asignado en un vuelo
+    def this_crew_member(self, cedula : str) -> bool:
+        return self._crewMates in cedula
+    
+    # Elimina un tripulante del vuelo
+    def delete_crew_member(self, cedula : str) -> bool:
+        if self.this_crew_member(cedula):
+            del self._crewMates[cedula]
+        else:
+            Exception( "Error: There is no crew member on this flight with this identification number %s." % ( cedula ) )
+     
     def getBookedSeats( self ) -> int :
         return len(self._passengers)
 
