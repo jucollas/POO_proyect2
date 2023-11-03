@@ -17,7 +17,11 @@ class CrewController():
 		return res;
 
 	def create_crewMember(self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int ) ->None :
+		if cedula is None or cedula == "":
+			return;
 		self._data.create_crew( cedula, name, surname, birthDate, genre, address, phoneNumber, email, jobPosition, dailyWorkingHours, yearsExperience )
 
 	def delete_crewMember(self, cedula : str ) -> None :
+		if cedula is None or cedula == "":
+			return;
 		self._data.delete_crew( cedula)

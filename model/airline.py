@@ -13,6 +13,12 @@ class Airline:
     def getAmountFlights( self ) -> int :
         return len( self._scheduled_flights )
 
+    def getSimpleFlights( self ):
+        res = [];
+        for f in self._scheduled_flights.values():
+            res.append( f );
+        return res
+
     def getFlights( self ) -> dict[str : dict[str : None]] :
         ans = {}
         for f in self._scheduled_flights.values():
@@ -45,11 +51,17 @@ class Airline:
     def deleteFlight( self, flightId : str ) -> None :
         del self._scheduled_flights[flightId];
 
+    def canActivateFlight( self, flightId : str ) -> bool:
+        return self._scheduled_flights[flightId].canActivate();
+    
+    def getFlight( self, flightId : str ) -> Flight:
+        return self._scheduled_flights[flightId]
+
     def activateFlight( self, flightId : str ) -> None :
-        if flightId in self._scheduled_flights:
-            flight = self._scheduled_flights[flightId]
-            flight.activateFlight();
-            del self._scheduled_flights[flightId]
+        flight = self._scheduled_flights[flightId]
+        flight.activateFlight();
+        del self._scheduled_flights[flightId]
+        return flight
 
 
     def unscheduleFlight(self, flight_id: str) -> None:

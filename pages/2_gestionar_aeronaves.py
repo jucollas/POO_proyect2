@@ -13,7 +13,7 @@ st.set_page_config(
 st.write( "Aeronaves" );
 
 st.dataframe( controller.get_aircrafts(), use_container_width = True, hide_index = True, column_config = {
-    1:"Numero de serie", 2:"Marca",3:"Modelo",4:"Año produccion",5:"Capacidad pasajeros",6:"Velocidad Maxima",7:"Autonomia",8:"Vuelos Asociados", 9:"En Vuelo", 10:"En Mantenimiento"
+    1:"Numero de serie", 2:"Marca",3:"Modelo",4:"Año produccion",5:"Capacidad pasajeros",6:"Velocidad Maxima",7:"Autonomia",8:"Vuelos Asociados", 9:"En Vuelo", 10:"En Mantenimiento", 11 :"¿se puede asignar vuelos?"
     } );
 
 seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Aeronave", "Eliminar Aeronave", "Mantenimiento"]);

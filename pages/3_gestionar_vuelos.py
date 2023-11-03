@@ -1,5 +1,7 @@
 import streamlit as st
-import controller.flight_controller as controller
+from controller.flight_controller import FlightController
+
+controller = FlightController()
 
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
@@ -18,7 +20,7 @@ if modo == "Aerolineas":
     comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Iniciar Vuelo", "Cancelar Vuelo", "Crear vuelo"] );
 
     if comand == "Iniciar Vuelo":
-        flight = st.selectbox( "Elegir Vuelo", controller.get_airline_flight_id( airline ) );
+        flight = st.selectbox( "Elegir Vuelo", controller.get_startable_flights( airline ) );
         if ( st.button( "Iniciar" ) ):
             controller.start_flight( airline, flight )
     elif comand == "Cancelar Vuelo":
@@ -37,7 +39,7 @@ if modo == "Aerolineas":
             st.write( "tripulantes" )
             crew = st.multiselect( "<cedula>|<nombre> - <apellido> - <trabajo> - <horas diarias de trabajo> - <experiencia>", controller.get_crew() );
             if ( st.form_submit_button( "Guardar" ) ):
-                controller.create_flight( selectedAirline, (aircraft.split("|"))[0], flightCode, date, origin, destiny, [ (el.split("|"))[0] for el in crew ] );
+                controller.create_flight( selectedAirline, None if aircraft is None else (aircraft.split("|"))[0], flightCode, date, origin, destiny, None if crew is None else  [ (el.split("|"))[0] for el in crew ] );
 
 elif modo == "Aeropuertos":
     airport = st.selectbox( "Elegir el aeropuerto", controller.get_airports() );

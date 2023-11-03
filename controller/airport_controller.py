@@ -6,6 +6,7 @@ from model.passenger import Passenger
 from model.crew import Crew
 from model.control_tower import ControlTower
 from view.errorMessage import errorMessage
+import datetime
 
 class AirportController:
     # patron singleton
@@ -24,11 +25,12 @@ class AirportController:
         self._passengers : dict[str, Passenger] = {}
         self._airports : dict[str, ControlTower] = {}
         self._flights = {}
+        self._flightCodes = set()
 
     def get_aircrafts( self ):
         res = []
         for air in self._aircrafts.values():
-            res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance() ) )
+            res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance(), air.canAssignFlight() ) )
         return res;
     def create_aircraft( self, aircraft : Aircraft ):
         if ( aircraft.getN_number() in self._aircrafts ):
@@ -90,7 +92,7 @@ class AirportController:
     def get_airports( self ) : 
         res = [];
         for airp in self._airports.values():
-            res.append( (airp.getCity(),airp.getAmountFlights()) );
+            res.append( (airp.getCity(),airp.getAmountFlights(), airp.availableGates()) );
         return res;
 
     def create_airport( self, city : str ) :
@@ -100,25 +102,87 @@ class AirportController:
         self._airports[city] = ControlTower(city);
 
     def delete_airport( self, city : str ) :
-        if ( self._airports.getAmountFlights() > 0 ):
+        if ( self._airports[city].getAmountFlights() > 0 ):
             errorMessage( "Error: el aeropuerto tiene varios vuelos asignados" );
             return;
         del self._airports[city]
     
     def get_boardingGates( self, city : str ) :
-        tmp = self._airports[city].get_boardingGates();
+        tmp = self._airports[city].getBoardingGates();
         res = []
         for gate in tmp:
             res.append( (gate.getIdentification(), gate.getLocation(), gate.getInGate(), gate.getHistory() ) );
         return res;
 
-    def create_boardingGates( self, city : str, ide : str, loc : str ):
-        tmp = self._airports[city].get_boardingGates();
+    def create_boardingGate( self, city : str, ide : str, loc : str ):
+        tmp = self._airports[city].getBoardingGates();
         for gate in tmp:
             if ( gate.getIdentification() == ide ):
                 errorMessage( "Error: el aeropuerto %s tiene ya la puerta de embarque de nombre %s" % ( city, ide ) )
                 return;
         self._airports[city].addGate( ide, loc );
 
-    def delete_boardingGates( self, city : str, id : str ):
+    def delete_boardingGate( self, city : str, ide : str ):
         self._airports[city].deleteGate( ide );
+
+    def get_flights_generic ( self, elem : str, key : str, fun = lambda x:True ):
+        res = []
+        if ( elem == "airline" ):
+            flights = self._airlines[key].getSimpleFlights();
+        elif ( elem == "airport" ) :
+            flights = self._airports[key].getFlights();
+        else:
+            raise Exception( "Error: La funcion <get_flights_generic> de la clase <AirportController> no reconoce 'elem' = %s" %(elem) );
+        for f in flights:
+            if fun( f ) :
+                aircraft = f.getAircraft();
+                res.append( ( f.getFlightCode(), f.getDate(), f.getOrigin(), f.getDestiny(), aircraft.getN_number(), f.getPassengers(), f.getCrewMates(), f.isInAir() ) );
+        return res;
+    
+    def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crew ):
+        if flightCode in self._flightCodes:
+            errorMessage( "Error: el codigo %s ya esta en uso." % ( flightCode ) )
+            return;
+        self._flightCodes.add( flightCode );
+        f = Flight( self._aircrafts[aircraft], crew, flightCode, date, origin, destiny );
+        self._airlines[airline].addFlight( f );
+        #no se que mas queras hacerle aqui
+
+    def cancel_flight( self, airline : str, flightId : str ) -> None :
+        self._airlines[airline].deleteFlight( flightId );
+
+    def start_flight( self, airline : str, flightId : str ) -> None :
+        flight = self._airlines[airline].getFlight( flightId );
+        
+        if ( not self._airlines[airline].canActivateFlight( flightId ) ):
+            raise Exception( "Error: es imposible activar el vuelo porque esta en mantenimiento o en otro vuelo" )
+
+        if ( flight.getOrigin() in self._airports ):
+            if ( self._airports[flight.getOrigin()].availableGates() == 0 ):
+                errorMessage( "Error: no hay suficientes puertas de abordaje en el aeropuerto %s" %(flight.getOrigin()) )
+            else:
+                self._airlines[airline].activateFlight( flightId )
+                self._airports[flight.getOrigin()].addFlight( flight )
+
+        elif ( flight.getDestiny() in self._airports ):
+            self._airports[flight.getDestiny()].addFlight( flight )
+
+
+    def takeOff_flight( self, airport : str, flight : str ) :
+        self._airports[airport].flightTakeOff( flight );
+
+    def land_flight( self, airport : str, flight : str ) :
+        if ( self._airports[airport].availableGates() == 0 ):
+            errorMessage( "Error: no hay suficientes puertas de abordaje en el aeropuerto %s" %(airport) )
+            return;
+        self._airports[airport].flightLand( flight );
+
+    def end_flight( self, airport : str, flight : str ) :
+        self._airports[airport].endFlight( flight );
+
+    def continue_flight( self, airport : str, flightId : str ) :
+        flight = self._airports[airport].continueFlight( flightId );
+        if ( flight.getDestiny() in self._airports ):
+            self._airports[flight.getDestiny()].addFlight( flight )
+
+

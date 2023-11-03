@@ -58,6 +58,9 @@ class Flight():
 
     # functiones
 
+    def canActivate(self) -> bool:
+        return not self.isActive() and not self._alreadyFlew and not self._aircraft.isInFlight() and not self._aircraft.inManteinance();
+
     def getFlightInformation(self) -> Message :
         if not self.isActive() or self._control is None :
             return None;
@@ -79,7 +82,7 @@ class Flight():
         self._gateId = None;
 
     def activateFlight( self ):
-        if not self.isActive() and not self._alreadyFlew and not self._aircraft.isInFlight() and not self._aircraft.inManteinance():
+        if self.canActivate():
             self._activeFlight = True
             self._aircraft.activateFlight()
         else:
@@ -90,6 +93,7 @@ class Flight():
             self._gateId = None
             self._activeFlight = False
             self._alreadyFlew = True
+            self._aircraft.deactivateFlight();
         else:
             raise Exception( "Error: Impossible to end Flight" );
 

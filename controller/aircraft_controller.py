@@ -14,7 +14,8 @@ class AircraftController():
 		return self._data.get_aircrafts();
 
 	def create_aircraft(self, aircraft_type : str, N_number : str, brand : str, model : str, yearProduction : str, abilityPass : int, speedMax : int, autonomy : int, nRotors : int = None, liftingCapacity : int = None, specificUse : str = None, cedula : str = None, name : str = None, surname : str = None, birthDate : datetime.date = None, genre : str = None, address : str = None, phoneNumber : str = None, email : str = None, heightMax : int = None, nEngines : int = None, category : str = None) -> None :
-
+		if ( N_number is None or N_number == "" ):
+			return;
 		if aircraft_type == "Helicoptero":
 			aircraft_type = "helicopter"
 		elif aircraft_type == "Avion":
@@ -33,6 +34,8 @@ class AircraftController():
 		return ans
 
 	def delete_aircraft(self, airId : str ) -> None :
+		if airId is None:
+			return;
 		self._data.delete_aircraft( airId )
 
 	def get_manteinable_aircrafts(self) -> list[str] :
@@ -44,10 +47,14 @@ class AircraftController():
 		return ans
 
 	def get_aircraft_manteinanceInfo(self,  airId : str ) -> None:
+		if airId is None:
+			return;
 		tmp = self._data.get_aircrafts();
 		for aircraft in tmp:
 			if ( aircraft[0] == airId ):
 				return aircraft[9]
 		
 	def change_manteinance(self, airId : str, manteinance : bool ) -> None :
+		if airId is None:
+			return;
 		self._data.change_manteinance( airId,manteinance )

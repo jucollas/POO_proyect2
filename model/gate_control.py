@@ -6,8 +6,9 @@ class GateControl:
     def __init__(self):
         self._gates : dict[str, BoardingGate] = {}
 
-    def getGates( self ) -> dict[str, BoardingGate]:
-        return self._gates.copy()
+    def getGates( self ):
+        res = [ gate for gate in self._gates.values() ]
+        return res
 
     def bookBoardingGate(self, flight : Flight ) -> str :
         for gate in self._gates.values():
@@ -37,11 +38,12 @@ class GateControl:
         else: 
             raise Exception( "Error: the id %s is not part of the boarding gates" % ( gateId ) );
 
-    def isAvailableGate( self ) -> bool :
+    def availableGates( self ) -> int :
+        res = 0
         for gate in self._gates.values():
             if ( gate.isAvailable() ):
-                return True
-        return False
+                res += 1
+        return res
 
     def __str__(self) -> str :
         tmp = [ f"There are {len(self._gates)} gates:" ]

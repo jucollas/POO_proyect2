@@ -6,6 +6,8 @@ class AirlineController():
 		self._data = AirportController();
 		
 	def create_airline(self, name : str ) -> None :
+		if name is None or name == "":
+			return ;
 		self._data.create_airline( name );
 
 	def get_airlines(self):
@@ -20,6 +22,8 @@ class AirlineController():
 		return res;
 
 	def delete_airline(self, name : str ) -> None :
+		if name is None or name == "":
+			return ;
 		self._data.delete_airline( name );
 
 if __name__ == "__main__":

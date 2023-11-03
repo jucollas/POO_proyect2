@@ -4,15 +4,15 @@ if __name__ != "__main__":
 
 
 
-class AbsFlight(ABC):
+	class AbsFlight(ABC):
 
-	@abstractmethod
-	def receiveMessage(self, message : Message ) -> None :
-		pass
+		@abstractmethod
+		def receiveMessage(self, message : Message ) -> None :
+			pass
 
-	@abstractmethod
-	def getFlightCode( self ) -> str :
-		pass
+		@abstractmethod
+		def getFlightCode( self ) -> str :
+			pass
 
 if __name__ == "__main__":
 	print("""
