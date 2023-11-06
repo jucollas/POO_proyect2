@@ -5,13 +5,16 @@ class Passenger(Person):
         super().__init__(cedula, name, surname, birthDate, genre, address, phoneNumber, email)
         self._nationality = nationality
         self._medicalInfo = medicalInfo
-        self.luggageAmount = luggageAmount
+        self._luggageAmount = luggageAmount
 
     def getNationality(self) -> str:
         return self._nationality
 
     def getMedicalInfo(self) -> str:
         return self._medicalInfo
+    
+    def getLuggageAmount(self) -> int:
+        return self._luggageAmount
 
     def setMedicalInfo(self, medicalInfo):
         self._medicalInfo = medicalInfo

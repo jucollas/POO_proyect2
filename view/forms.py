@@ -36,6 +36,19 @@ def crewForm(controller ,  name : str = "Formulario tripulante" ) -> None :
 		crew_data['yearsExperience'] = yearsExperience
 		if ( st.form_submit_button( "Guardar" ) ):
 			controller.create_crewMember(**crew_data)
+
+def PassagerForm(controller, name : str = "Formulario Pasajero"):
+	with st.form ( name ):
+		st.write( name )
+		passager_data = personForm()
+		nationality = st.text_input( "Nacionalidad: ", key = "Nacionalidad" )
+		medicalInfo = st.text_area( "Informacion medica: ", key = "medicaInfo" )
+		luggageAmount = st.selectbox( "Equipaje: ", ["Super liviano", "Liviano", "Mediano", "Grande"], key = "Equipaje" )
+		passager_data['nationality'] = nationality
+		passager_data['medicalInfo'] = medicalInfo
+		passager_data['luggageAmount'] = luggageAmount
+		if ( st.form_submit_button( "Guardar" ) ):
+			controller.create_passager(**passager_data)
 			 
 
 if __name__ == "__main__":

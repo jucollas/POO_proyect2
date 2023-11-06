@@ -27,11 +27,14 @@ class AirportController:
         self._flights = {}
         self._flightCodes = set()
 
+    ###### Aircrafts ######
+    
     def get_aircrafts( self ):
         res = []
         for air in self._aircrafts.values():
             res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance(), air.canAssignFlight() ) )
         return res;
+
     def create_aircraft( self, aircraft : Aircraft ):
         if ( aircraft.getN_number() in self._aircrafts ):
             errorMessage( "Error: el numero de serie %s ya ha sido tomado por otra aeronave." % ( aircraft.getN_number() ) )
@@ -44,6 +47,21 @@ class AirportController:
     def change_manteinance( self, nNumber : str, state : bool ):
         self._aircrafts[nNumber].toggleManteinance( state )
 
+    ##### Passager ######
+
+    def create_passager( self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, nationality : str, medicalInfo : str, luggageAmount : int) -> None:
+        if ( cedula in self._passengers ):
+            errorMessage( "Error: la cedula %s ya esta utilizada por otro pasajero." % ( cedula ) )
+            return;
+        self._passengers[cedula] = Passenger(cedula, name, surname, birthDate, genre, address, phoneNumber, email, nationality, medicalInfo, luggageAmount )
+
+    def get_passagers(self):
+        ans = []
+        for pas in self._passengers.values():
+            ans.append( (pas.getCedula(), pas.getName(), pas.getSurname(), pas.getBirthDate(), pas.getGenre(), pas.getAddress(), pas.getPhoneNumber(), pas.getEmail(), pas.getNationality(), pas.getMedicalInfo(), pas.getLuggageAmount()) )
+        return ans
+    
+    ###### Crew ######
 
     def get_crews( self ):
         res = []
@@ -74,6 +92,8 @@ class AirportController:
     def assign_crew_member_to_flight(self, cedulaCrew : str, flightCode : str) -> None:
         self._flights[flightCode].bookSeat(self._crews[cedulaCrew])
 
+    ###### Airline ######
+
     def get_airlines( self ) :
         res = [];
         for air in self._airlines.values() :
@@ -89,6 +109,8 @@ class AirportController:
     def delete_airline( self, name : str ) -> None :
         del self._airlines[name]
 
+    ###### Airport ######
+    
     def get_airports( self ) : 
         res = [];
         for airp in self._airports.values():
@@ -106,6 +128,8 @@ class AirportController:
             errorMessage( "Error: el aeropuerto tiene varios vuelos asignados" );
             return;
         del self._airports[city]
+
+    ###### Boarding Gate ######
     
     def get_boardingGates( self, city : str ) :
         tmp = self._airports[city].getBoardingGates();
