@@ -22,7 +22,7 @@ class Flight():
         self._alreadyFlew = False
         self._gateId = None
         self._passengers = {}
-        self._crewMates = {}
+        self._crewMates = crewMates
         aircraft.assignFlight()
 
     # get

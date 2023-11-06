@@ -1,8 +1,6 @@
-from model.flight import Flight
+from controller.airport_controller import AirportController
 from view.errorMessage import errorMessage
 import datetime
-from model.crew import Crew
-from controller.airport_controller import AirportController
 
 class FlightController():
 

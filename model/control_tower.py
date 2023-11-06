@@ -6,7 +6,7 @@ from model.gate_control import GateControl
 
 class ControlTower:
     def __init__( self, city : str ):
-        self._flights : dic[ str ,Flight] = {}
+        self._flights : dict[ str ,Flight] = {}
         self._gateControl = GateControl()
         self._city = city;
 

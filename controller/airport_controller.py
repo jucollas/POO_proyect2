@@ -24,8 +24,7 @@ class AirportController:
         self._crews : dict[str, Crew] = {}
         self._passengers : dict[str, Passenger] = {}
         self._airports : dict[str, ControlTower] = {}
-        self._flights = {}
-        self._flightCodes = set()
+        self._flights : dict[str, Flight]= {}
 
     ###### Aircrafts ######
     
@@ -60,6 +59,12 @@ class AirportController:
         for pas in self._passengers.values():
             ans.append( (pas.getCedula(), pas.getName(), pas.getSurname(), pas.getBirthDate(), pas.getGenre(), pas.getAddress(), pas.getPhoneNumber(), pas.getEmail(), pas.getNationality(), pas.getMedicalInfo(), pas.getLuggageAmount()) )
         return ans
+    
+    def assign_passenger_to_flight(self, cedula : str, idFlight : str) -> None:
+        if not cedula in self._passengers:
+            errorMessage( "Error: la cedula %s no se encuentra registrada." % ( cedula ) )
+            return
+        self._flights[idFlight].bookSeat(self._passengers[cedula])
     
     ###### Crew ######
 
@@ -148,13 +153,17 @@ class AirportController:
 
     def delete_boardingGate( self, city : str, ide : str ):
         self._airports[city].deleteGate( ide );
+    
+    ###### flight #######
 
     def get_flights_generic ( self, elem : str, key : str, fun = lambda x:True ):
         res = []
         if ( elem == "airline" ):
             flights = self._airlines[key].getSimpleFlights();
-        elif ( elem == "airport" ) :
+        elif ( elem == "airport" ):
             flights = self._airports[key].getFlights();
+        elif ( elem == "client"):
+            flights = self._flights.values()
         else:
             raise Exception( "Error: La funcion <get_flights_generic> de la clase <AirportController> no reconoce 'elem' = %s" %(elem) );
         for f in flights:
@@ -164,12 +173,12 @@ class AirportController:
         return res;
     
     def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crew ):
-        if flightCode in self._flightCodes:
+        if flightCode in self._flights:
             errorMessage( "Error: el codigo %s ya esta en uso." % ( flightCode ) )
             return;
-        self._flightCodes.add( flightCode );
-        f = Flight( self._aircrafts[aircraft], crew, flightCode, date, origin, destiny );
-        self._airlines[airline].addFlight( f );
+        f = Flight( self._aircrafts[aircraft], crew, flightCode, date, origin, destiny )
+        self._flights[flightCode] = f 
+        self._airlines[airline].addFlight( f )
         #no se que mas queras hacerle aqui
 
     def cancel_flight( self, airline : str, flightId : str ) -> None :

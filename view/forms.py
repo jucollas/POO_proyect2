@@ -1,7 +1,6 @@
-import datetime
+from controller.passenger_controller import PassengerController
+from controller.crew_controller import CrewController
 import streamlit as st
-#from controller.crew_controller import Crew_
-
 
 def personForm() -> dict[str, str] :
 	cedula = st.text_input( "Cedula: ", key = "cedula" )
@@ -24,7 +23,7 @@ def personForm() -> dict[str, str] :
 	}
 	return person_data
 
-def crewForm(controller ,  name : str = "Formulario tripulante" ) -> None :
+def crewForm(controller : CrewController ,  name : str = "Formulario tripulante" ) -> None :
 	with st.form( name ):
 		st.write( name )
 		crew_data = personForm()
@@ -37,7 +36,7 @@ def crewForm(controller ,  name : str = "Formulario tripulante" ) -> None :
 		if ( st.form_submit_button( "Guardar" ) ):
 			controller.create_crewMember(**crew_data)
 
-def PassagerForm(controller, name : str = "Formulario Pasajero"):
+def PassagerForm(controller : PassengerController, name : str = "Formulario Pasajero"):
 	with st.form ( name ):
 		st.write( name )
 		passager_data = personForm()

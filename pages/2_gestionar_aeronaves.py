@@ -1,6 +1,5 @@
 import streamlit as st
 from controller.aircraft_controller import AircraftController
-from view.forms import personForm
 
 controller = AircraftController()
 
