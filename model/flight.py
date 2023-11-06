@@ -1,11 +1,7 @@
-
 from model.message import Message
-from model.person import Person
 from model.passenger import Passenger
 from model.crew import Crew
 from model.aircraft import Aircraft
-
-
 
 import random
 import time
@@ -148,16 +144,3 @@ if __name__ == "__main__":
     f1 = Flight( av, [], "cactus-88", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
     f2 = Flight( av, [], "cactus-89", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
     f3 = Flight( av, [], "cactus-90", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
-    print(f1)
-    print(f2)
-    print(f3)
-    ct = ControlTower( "cali" );
-    ct.addGate("00", "a")
-    ct.addGate("01", "b")
-    print( ct )
-    f1.activateFlight();
-    ct.addFlight( f1 )
-    f2.activateFlight()
-    ct.addFlight( f2 )
-    print( f1)
-    print( f2 )

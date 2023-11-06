@@ -1,5 +1,7 @@
+from view.loandig_data import loandig_data_default
 import streamlit as st
 
+loandig_data_default()
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
     page_title = "aeropuerto",

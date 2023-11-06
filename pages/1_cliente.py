@@ -1,13 +1,9 @@
 import streamlit as st
 from controller.passenger_controller import PassengerController
-#from controller.flight_controller import FlightController
 from view.forms import PassagerForm
 
 controller = PassengerController()
-#controllerFlight = FlightController()
 
-
-#configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
     page_title = "cliente",
     page_icon = ":toolbox:"
@@ -32,6 +28,3 @@ elif ( seleccion == "Comprar Vuelo" ):
     flight = st.selectbox("Identificador de Vuelo", [f[0] for f in flights] )
     if ( st.button( "Comprar" ) ):
         controller.assing_passenger_to_flight( client, flight )
-
-
-

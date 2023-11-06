@@ -6,7 +6,7 @@ def personForm() -> dict[str, str] :
 	cedula = st.text_input( "Cedula: ", key = "cedula" )
 	name = st.text_input( "Nombre: ", key = "name" )
 	surname = st.text_input( "Apellido: ", key = "surname" )
-	birthDate = st.date_input( "Fecha de Nacimiento: " );
+	birthDate = st.date_input( "Fecha de Nacimiento: ")
 	genre = st.selectbox( "Genero: ", ["Masculino", "Femenino", "Otro"] )
 	address = st.text_input( "Direccion: ", key = "address" )
 	phoneNumber = st.text_input( "Numero de telefono: ", key = "phoneNumber" )
@@ -27,9 +27,14 @@ def crewForm(controller : CrewController ,  name : str = "Formulario tripulante"
 	with st.form( name ):
 		st.write( name )
 		crew_data = personForm()
-		jobPosition = st.text_input( "Trabajo: ", key = "jobPosition" )
-		dailyWorkingHours = st.number_input( "Horas diarias de Trabajo: ", key = "dailyWorkingHours" )
-		yearsExperience = st.number_input( "Años de experiencia: ", key = "yearsExperience" )
+		jobPosition = jobPosition = st.selectbox("Cargo:", [
+        "Piloto al mando (Comandante o Capitán)", 
+        "Primer Oficial (Co-piloto)", 
+        "Tripulación de cabina", 
+        "Ingeniero de vuelo (en algunos tipos de aeronaves)"
+        ], key = 'jobPosition')
+		dailyWorkingHours = st.number_input("Horas de Trabajo Diarias:", min_value=0, max_value=24, step=1, key = "dailyWorkingHours" )
+		yearsExperience = st.number_input("Años de experiencia:", min_value=0, max_value=30, step=1, key = "yearsExperience" )
 		crew_data['jobPosition'] = jobPosition
 		crew_data['dailyWorkingHours'] = dailyWorkingHours
 		crew_data['yearsExperience'] = yearsExperience
@@ -48,7 +53,6 @@ def PassagerForm(controller : PassengerController, name : str = "Formulario Pasa
 		passager_data['luggageAmount'] = luggageAmount
 		if ( st.form_submit_button( "Guardar" ) ):
 			controller.create_passager(**passager_data)
-			 
 
 if __name__ == "__main__":
 	st.write( str(personForm( "hola" )))

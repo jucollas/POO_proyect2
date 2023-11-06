@@ -7,7 +7,7 @@ class BoardingGate:
         self._identification = identification
         self._location = location
         self._inGate = None
-        self._history = []
+        self._history : list[Flight] = []
 
     def getIdentification(self) -> str:
         return self._identification
@@ -15,7 +15,7 @@ class BoardingGate:
     def getLocation(self) -> str:
         return self._location
 
-    def getHistory(self):
+    def getHistory(self) -> list[Flight]:
         res = []
         for f in self._history:
             res.append( f.getFlightCode() );
@@ -61,8 +61,8 @@ if __name__ == "__main__":
     av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
     f1 = Flight( av, [], "cactus-88", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
     print( bg )
-    bg.assign_flight( f1 )
+    bg.assignFlight( f1 )
     print( bg );
-    bg.dispatch_flight();
+    bg.dispatchFlight();
     print( bg )
 

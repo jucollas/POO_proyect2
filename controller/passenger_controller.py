@@ -28,9 +28,3 @@ class PassengerController():
 		fun = lambda f : (f.getOrigin() == origin or origin is None ) and (f.getDestiny() == destiny or destiny is None ) and (f.getDate() == date or date is None) and ( not f.isInAir())
 		flights = self._data.get_flights_generic("client", "", fun )
 		return flights
-
-
-	'''def delete_crewMember(self, cedula : str ) -> None :
-		if cedula is None or cedula == "":
-			return;
-		self._data.delete_crew( cedula)'''

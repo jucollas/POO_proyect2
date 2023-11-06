@@ -1,11 +1,10 @@
-
 from model.flight import Flight
-
 from model.message import Message
 from model.gate_control import GateControl
+from model.boarding_gate import BoardingGate
 
 class ControlTower:
-    def __init__( self, city : str ):
+    def __init__( self, city : str ) -> None:
         self._flights : dict[ str ,Flight] = {}
         self._gateControl = GateControl()
         self._city = city;
@@ -22,7 +21,7 @@ class ControlTower:
     def getAmountFlights( self ) -> int:
         return len( self._flights );
 
-    def getBoardingGates( self ) :
+    def getBoardingGates( self ) -> list[BoardingGate] :
         return self._gateControl.getGates();
 
     def addFlight(self, f: Flight) -> None:

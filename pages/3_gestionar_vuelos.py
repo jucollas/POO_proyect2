@@ -1,5 +1,7 @@
-import streamlit as st
 from controller.flight_controller import FlightController
+from view.flightFrom import flightFrom
+
+import streamlit as st
 
 controller = FlightController()
 
@@ -28,18 +30,7 @@ if modo == "Aerolineas":
         if ( st.button( "Cancelar" ) ):
             controller.cancel_flight( airline, flight )
     elif comand == "Crear vuelo":
-        with st.form( "Vuelo" ):
-            flightCode = st.text_input( "Codigo de Vuelo: ", key = "flightCode" );
-            selectedAirline = st.selectbox( "Aerolinea: ", controller.get_airlines() );
-            date = st.date_input( "Fecha del vuelo: ", key = "date" );
-            origin = st.selectbox( "Aeropuerto de salida", controller.get_airports() )
-            destiny = st.selectbox( "Aeropuerto de llegada",controller.get_airports() );
-            st.write( "Aeronave" );
-            aircraft = st.selectbox( "<numero serie>|<marca> - <modelo> - <pasajeros> - <velocidad maxima> - <autonomia>", controller.get_posible_aircraft() );
-            st.write( "tripulantes" )
-            crew = st.multiselect( "<cedula>|<nombre> - <apellido> - <trabajo> - <horas diarias de trabajo> - <experiencia>", controller.get_crew() );
-            if ( st.form_submit_button( "Guardar" ) ):
-                controller.create_flight( selectedAirline, None if aircraft is None else (aircraft.split("|"))[0], flightCode, date, origin, destiny, None if crew is None else  [ (el.split("|"))[0] for el in crew ] );
+        flightFrom("Vuelo")
 
 elif modo == "Aeropuertos":
     airport = st.selectbox( "Elegir el aeropuerto", controller.get_airports() );
@@ -68,6 +59,6 @@ elif modo == "Aeropuertos":
         if ( st.button( "Continuar" ) ):
             controller.continue_flight( airport, flight )
     elif comand == "Dar informacion":
-        pass#nota hacer esto
+        pass # nota hacer esto
 
 

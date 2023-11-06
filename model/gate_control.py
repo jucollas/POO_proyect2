@@ -1,5 +1,4 @@
 from model.flight import Flight
-
 from model.boarding_gate import BoardingGate
 
 class GateControl:
