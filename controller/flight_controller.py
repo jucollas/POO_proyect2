@@ -58,9 +58,12 @@ class FlightController():
 		return res
 
 	def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crew : list[str]  ):
-		if airline is None or aircraft is None or flightCode == "":
+		if airline is None or aircraft is None or flightCode == "" or origin is None or destiny is None or len(crew) == 0:
 			errorMessage( "Error: no hay suficientes datos para crear el vuelo" )
-			return;
+			return
+		elif not self._data.there_pilot(crew):
+			errorMessage( "Error: Se necesita en la tripulacion por lo menos un piloto" )
+			return
 		self._data.create_flight( airline, aircraft, flightCode, date, origin, destiny, crew )
 
 	def cancel_flight( self, airline : str, flightId : str ) -> None :

@@ -15,7 +15,11 @@ class PassengerController():
 		self._data.create_passager( cedula, name, surname, birthDate, genre, address, phoneNumber, email, nationality, medicalInfo, luggageAmount)
 
 	def assing_passenger_to_flight(self, passengerCedula : str, idFlight : str) -> None:
-		if passengerCedula is None or passengerCedula == "" or idFlight is None or idFlight == "":
+		if passengerCedula == "" :
+			errorMessage("Error: Se necesita la cedula del usuario para reservar el vuelo")
+			return
+		elif idFlight is None or idFlight == "":
+			errorMessage("Error: Se necesita el codigo del vuelo para reservar")
 			return
 		self._data.assign_passenger_to_flight(passengerCedula, idFlight)
 

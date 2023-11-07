@@ -37,11 +37,11 @@ class loandigData:
 
             #### Aircraft ####
 
-            _controllerAircraft.create_aircraft( "plane", "tango-00", "mitsubishi", "airbus", "100A.C", 10, 20, 10000, heightMax = 840, nEngines = 2, category = "comercial" );
+            _controllerAircraft.create_aircraft( "plane", "tango-00", "mitsubishi", "airbus", "2004", 10, 20, 10000, heightMax = 840, nEngines = 2, category = "comercial" );
 
-            _controllerAircraft.create_aircraft( "helicopter", "tango-01", "mitsubishi", "airbus", "100A.C", 10, 20, 10000, heightMax = 840, nRotors = 1, liftingCapacity = 200, specificUse = "rescate" )
+            _controllerAircraft.create_aircraft( "helicopter", "tango-01", "mitsubishi", "airbus", "2006", 10, 20, 10000, heightMax = 840, nRotors = 1, liftingCapacity = 200, specificUse = "rescate" )
 
-            _controllerAircraft.create_aircraft( "jet", "tango-02", "mitsubishi", "airbus", "100A.C", 10, 20, 10000, cedula = "1110101", name = "oscar" , surname = "vargas", birthDate = 'today', genre = "macho", address = "en tu casa", phoneNumber = "0135462013", email = "hola@gmail.com")
+            _controllerAircraft.create_aircraft( "jet", "tango-02", "mitsubishi", "airbus", "2020", 10, 20, 10000, cedula = "1110101", name = "oscar" , surname = "vargas", birthDate = 'today', genre = "macho", address = "en tu casa", phoneNumber = "0135462013", email = "hola@gmail.com")
 
             #### Airline ####
 
@@ -70,9 +70,9 @@ class loandigData:
 
             data = datetime.date(2023,11,6)
 
-            _controllerCrew.create_crewMember("741852963", "Sara", "Salazar", data, 'Femenino', 'Cr 12 N 8-22', '32314154', 'sara@gmail.com', 'Piloto', 10, 20 )
-            _controllerCrew.create_crewMember("85214567", "Santiago", "Salazar", data, 'Masculino', 'Cr 12 N 8-22', '32314154', 'sara@gmail.com', 'Piloto', 10, 20 )
-            _controllerCrew.create_crewMember("741852444", "Camila", "Salazar", data, 'Femenino', 'Cr 12 N 8-22', '32314154', 'sara@gmail.com', 'Piloto', 10, 20 )
+            _controllerCrew.create_crewMember("741852963", "Sara", "Salazar", data, 'Femenino', 'Cr 12 N 8-22', '32314154', 'sara@gmail.com', 'piloto', 10, 20 )
+            _controllerCrew.create_crewMember("85214567", "Santiago", "Salazar", data, 'Masculino', 'Cr 12 N 8-22', '32314154', 'sara@gmail.com', 'piloto', 10, 20 )
+            _controllerCrew.create_crewMember("741852444", "Camila", "Salazar", data, 'Femenino', 'Cr 12 N 8-22', '32314154', 'sara@gmail.com', 'piloto', 10, 20 )
 
             ### Flight ###
 

@@ -97,6 +97,14 @@ class AirportController:
     def assign_crew_member_to_flight(self, cedulaCrew : str, flightCode : str) -> None:
         self._flights[flightCode].bookSeat(self._crews[cedulaCrew])
 
+    def there_pilot(self, crews : list[str]) -> bool:
+        ans = False
+        for crew in crews:
+            if self._crews[crew].getJobPosition() == "piloto":
+                ans = True
+                break
+        return ans
+
     ###### Airline ######
 
     def get_airlines( self ) :

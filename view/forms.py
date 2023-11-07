@@ -27,12 +27,23 @@ def crewForm(controller : CrewController ,  name : str = "Formulario tripulante"
 	with st.form( name ):
 		st.write( name )
 		crew_data = personForm()
-		jobPosition = jobPosition = st.selectbox("Cargo:", [
+		optionJob =  [
         "Piloto al mando (Comandante o Capitán)", 
         "Primer Oficial (Co-piloto)", 
         "Tripulación de cabina", 
         "Ingeniero de vuelo (en algunos tipos de aeronaves)"
-        ], key = 'jobPosition')
+        ]
+		jobPosition = jobPosition = st.selectbox("Cargo:", optionJob, key = 'jobPosition')
+		
+		if jobPosition ==  optionJob[0]:
+			jobPosition = "piloto"
+		elif jobPosition == optionJob[1]:
+			jobPosition = "co-piloto"
+		elif jobPosition == optionJob[2]:
+			jobPosition = "tripulante de cabina"
+		elif jobPosition == optionJob[3]:
+			jobPosition = "ingeniero"
+
 		dailyWorkingHours = st.number_input("Horas de Trabajo Diarias:", min_value=0, max_value=24, step=1, key = "dailyWorkingHours" )
 		yearsExperience = st.number_input("Años de experiencia:", min_value=0, max_value=30, step=1, key = "yearsExperience" )
 		crew_data['jobPosition'] = jobPosition
