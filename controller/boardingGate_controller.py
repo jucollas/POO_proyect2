@@ -1,4 +1,5 @@
 from controller.airport_controller import AirportController
+from view.errorMessage import errorMessage
 
 class BoardingGate_Controller():
 
@@ -16,7 +17,8 @@ class BoardingGate_Controller():
 		return self._data.get_boardingGates( city );
 
 	def create_boardingGate( self, city : str, ident : str, loc : str ) -> None :
-		if city is None or ident is None or ident == "":
+		if city is None or ident is None or ident == "" or loc == "":
+			errorMessage( "Error: No hay informacion suficinete para crear la puerta de embarque" )
 			return;
 		self._data.create_boardingGate( city, ident, loc )
 
