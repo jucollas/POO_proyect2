@@ -1,4 +1,6 @@
 from controller.airport_controller import AirportController
+from view.errorMessage import errorMessage            
+
 import datetime
 
 class PassengerController():
@@ -7,7 +9,8 @@ class PassengerController():
 		self._data = AirportController()
 
 	def create_passager( self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, nationality : str, medicalInfo : str, luggageAmount : str) -> None:
-		if cedula is None or cedula == "":
+		if cedula == "" or name == "" or surname == "" or address == "" or phoneNumber == "" or email == "" or nationality == "":
+			errorMessage( "Error: la no hay la sufiente informacion para crear registarse.")
 			return
 		self._data.create_passager( cedula, name, surname, birthDate, genre, address, phoneNumber, email, nationality, medicalInfo, luggageAmount)
 
