@@ -1,7 +1,5 @@
 from controller.flight_controller import FlightController
-
 import streamlit as st
-
 
 def flightFrom(controller : FlightController, name : str ):
     with st.form( name ):

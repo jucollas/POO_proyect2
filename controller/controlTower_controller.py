@@ -1,4 +1,7 @@
 from controller.airport_controller import AirportController
+from view.errorMessage import errorMessage
+
+
 
 class ControlTower_controller():
 	
@@ -7,7 +10,8 @@ class ControlTower_controller():
 
 	def create_airport( self, name : str ) -> None:
 		if name is None or name == "":
-			return;
+			errorMessage( "Error: Se necesita el nombre de la cuidad para crear el aeropuerto")
+			return
 		self._data.create_airport( name )
 
 	def get_airports(self) :
