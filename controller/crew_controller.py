@@ -18,8 +18,9 @@ class CrewController():
 		return res;
 
 	def create_crewMember(self, cedula: str, name: str, surname: str, birthDate: datetime.date, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int ) ->None :
-		if cedula is None or cedula == "":
-			return;
+		if cedula == "" or name == "" or surname == "" or address == "" or phoneNumber == "" or email == "":
+			errorMessage( "Error: No hay la sufiente informacion para crear tripulante.")
+			return
 		self._data.create_crew( cedula, name, surname, birthDate, genre, address, phoneNumber, email, jobPosition, dailyWorkingHours, yearsExperience )
 
 	def delete_crewMember(self, cedula : str ) -> None :

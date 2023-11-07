@@ -10,7 +10,7 @@ class PassengerController():
 
 	def create_passager( self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, nationality : str, medicalInfo : str, luggageAmount : str) -> None:
 		if cedula == "" or name == "" or surname == "" or address == "" or phoneNumber == "" or email == "" or nationality == "":
-			errorMessage( "Error: la no hay la sufiente informacion para crear registarse.")
+			errorMessage( "Error: No hay la sufiente informacion para registrarse.")
 			return
 		self._data.create_passager( cedula, name, surname, birthDate, genre, address, phoneNumber, email, nationality, medicalInfo, luggageAmount)
 
