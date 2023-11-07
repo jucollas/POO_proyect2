@@ -1,4 +1,6 @@
 from controller.airport_controller import AirportController
+from view.errorMessage import errorMessage
+
 
 class AirlineController():
 
@@ -7,7 +9,8 @@ class AirlineController():
 		
 	def create_airline(self, name : str ) -> None :
 		if name is None or name == "":
-			return ;
+			errorMessage( "Error: Se necesita un nombre para crear la aerolinea")
+			return
 		self._data.create_airline( name );
 
 	def get_airlines(self):
