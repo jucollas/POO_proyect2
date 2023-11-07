@@ -5,7 +5,7 @@ controller = AircraftController()
 
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
-    page_title = "aeronaves",
+    page_title = "Aeronaves",
     page_icon = ":toolbox:"
 )
 
@@ -25,17 +25,17 @@ if ( seleccion ==  "Crear Aeronave" ) :
     n_number = st.text_input( "Numero de serie: ", key ="serie" );
     brand = st.text_input( "Marca: ", key ="marca")
     model = st.text_input( "Modelo: ", key ="modelo" );
-    yearProduction = str(st.number_input( "Año de producion: ", key = "añoProduccion" ))
-    abilityPass = st.number_input( "Capacidad de pasajeros: ",key = "abilityPass" );
-    speedMax = st.number_input( "Velocidad Maxima: ", key = "speedMax" );
-    autonomy = st.number_input( "Autonomia: ", key = "autonomy" );
+    yearProduction = str(st.number_input( "Año de producion: ", key = "añoProduccion", min_value=1970, max_value=2023, step=1 )) # modificar con el año actual
+    abilityPass = st.number_input( "Capacidad de pasajeros: ",key = "abilityPass", min_value=0, step=1 )
+    speedMax = st.number_input( "Velocidad Maxima (km/h): ", key = "speedMax", min_value=0, step=1 )
+    autonomy = st.number_input( "Autonomia (km): ", key = "autonomy", min_value=0, step=1 )
     if ( aircraftType == "Helicoptero" ):
-        nRotors = st.number_input( "Cantidad de rotores: ", key = "nRotors" )
-        liftingCapacity = st.number_input( "Capacidad de levantar: ", key = "liftingCapacity" )
+        nRotors = st.number_input( "Cantidad de rotores: ", key = "nRotors", min_value=0, step=1 )
+        liftingCapacity = st.number_input( "Capacidad de levantar (ton): ", key = "liftingCapacity", min_value=0, step=1 )
         specificUse = st.selectbox( "Uso: ", ["Comercial", "Privado", "Salvar vidas"] )#no me acuerdo
     elif ( aircraftType == "Avion" ):
-        heightMax = st.number_input( "Altura Maxima: ", key = "heightMax" )
-        nEngines = st.number_input( "Cantidad de motores: ", key ="nEngines" )
+        heightMax = st.number_input( "Altura Maxima (pies): ", key = "heightMax", min_value=0, step=1 )
+        nEngines = st.number_input( "Cantidad de motores: ", key ="nEngines", min_value=0, step=1  )
         category = st.selectbox( "Categoria: ", ["comercial", "carga", "bombardeo"] )
     elif ( aircraftType == "Jet" ):
         st.write( "Escribe la informacion del propietario del jet:" );

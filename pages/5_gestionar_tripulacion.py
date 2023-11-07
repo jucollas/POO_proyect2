@@ -6,7 +6,7 @@ controller = CrewController()
 
 #configura el logo que aparece junto al boton de cerrar la camara
 st.set_page_config(
-    page_title = "tripulacion",
+    page_title = "Tripulacion",
     page_icon = ":toolbox:"
 )
 

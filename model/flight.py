@@ -8,7 +8,7 @@ import time
 import datetime
 
 class Flight():
-    def __init__(self, aircraft : Aircraft, crewMates : list[Crew], flightCode : str, date : datetime.date, origin : str, destiny : str ):
+    def __init__(self, aircraft : Aircraft, crewMates : list[str], flightCode : str, date : datetime.date, origin : str, destiny : str ):
         self._aircraft = aircraft
         self._flightCode = flightCode
         self._date = date
@@ -41,10 +41,10 @@ class Flight():
     def getAircraft(self) -> Aircraft :
         return self._aircraft
 
-    def getPassengers(self) -> dict[Passenger] :
+    def getPassengers(self) -> dict[str, Passenger] :
         return self._passengers.copy() # para evitar cambios raros en self._passengers
 
-    def getCrewMates(self) -> list[Crew] :
+    def getCrewMates(self) -> list[str, Crew] :
         return self._crewMates.copy() # para evitar cambios raros en self._crewMates
 
     # set

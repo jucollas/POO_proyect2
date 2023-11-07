@@ -57,8 +57,8 @@ class FlightController():
 			res.append( "|".join( [c[0], " - ".join( [str(c[1]), str(c[2]), str(c[8]), str(c[9]), str(c[10])] ) ] ));
 		return res
 
-	def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crew ):
-		if airline is None or aircraft is None or flightCode is None:
+	def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crew : list[str]  ):
+		if airline is None or aircraft is None or flightCode == "":
 			errorMessage( "Error: no hay suficientes datos para crear el vuelo" )
 			return;
 		self._data.create_flight( airline, aircraft, flightCode, date, origin, destiny, crew )

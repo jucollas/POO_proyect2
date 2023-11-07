@@ -39,9 +39,6 @@ class Airline:
         res = []
         for flight in self._scheduled_flights.values():
             if (date is None or date == flight.get_date()) and (origin is None or origin == flight.get_origin()) and (destiny is None or destiny == flight.get_destiny()):
-                #booked_seats = flight.get_booked_seats()
-                #ability_pass = flight.get_aircraft().get_ability_pass()
-                #print(f"[{len(res)}] {flight.get_flight_code()} | date: {flight.get_date()}, origin: {flight.get_origin()}, destiny: {flight.get_destiny()}. With [{booked_seats}/{ability_pass}] available seats.")
                 res.append(flight)
         return res
 
@@ -78,11 +75,10 @@ if __name__ == "__main__":
     from control_tower import ControlTower
     from flight import Flight
     from aircraft import Aircraft
+
     ai = Airline( "avianca" );
-    connections.airlines[ai.getName()] = ai
     ct = ControlTower( "cali" )
     ct.addGate( "00", "a" )
-    connections.cities[ct.getCity()] = ct
     av = Aircraft( "tango-00", "boeing", "airbus", "anteayer", 100, 200, 300  );
     f1 = Flight( av, [], "cactus-88", datetime.date( 2020, 12, 7 ), "cali", "barranquilla" )
     ai.addFlight( f1 )
@@ -90,15 +86,14 @@ if __name__ == "__main__":
     ai.activateFlight( f1.getFlightCode() );
     print ( ai )
     print( ct )
-    f1.takeOff();
+    f1.takeOff()
     print( ct )
-    f1.disconnectFlight();
+    f1.disconnectFlight()
     print(f1)
     ct.addFlight(f1)
     f1.land()
     print(ct)
     f1.endFlight()
     print(ct)
-    print(airlines)
 
 

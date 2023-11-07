@@ -1,5 +1,6 @@
 from controller.airport_controller import AirportController
 from view.errorMessage import errorMessage
+import datetime
 
 class CrewController():
 
@@ -16,7 +17,7 @@ class CrewController():
 			res.append( member[0] );
 		return res;
 
-	def create_crewMember(self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int ) ->None :
+	def create_crewMember(self, cedula: str, name: str, surname: str, birthDate: datetime.date, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int ) ->None :
 		if cedula is None or cedula == "":
 			return;
 		self._data.create_crew( cedula, name, surname, birthDate, genre, address, phoneNumber, email, jobPosition, dailyWorkingHours, yearsExperience )

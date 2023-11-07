@@ -75,7 +75,7 @@ class AirportController:
         return res;
 
     # Crea un nuevo tripulante
-    def create_crew(self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int) -> None:
+    def create_crew(self, cedula: str, name: str, surname: str, birthDate: datetime.date, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int) -> None:
         if ( cedula in self._crews ):
             errorMessage( "Error: la cedula %s ya esta utilizada por un miembro de la tripulacion." % ( cedula ) )
             return;
@@ -169,14 +169,15 @@ class AirportController:
         for f in flights:
             if fun( f ) :
                 aircraft = f.getAircraft();
-                res.append( ( f.getFlightCode(), f.getDate(), f.getOrigin(), f.getDestiny(), aircraft.getN_number(), f.getPassengers(), f.getCrewMates(), f.isInAir() ) );
+                res.append( ( f.getFlightCode(), f.getDate(), f.getOrigin(), f.getDestiny(), aircraft.getN_number(),  f.getCrewMates(), f.isInAir() ) )
+                '''list(f.getPassengers().values()),''',
         return res;
     
-    def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crew ):
+    def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crews : list[str] ):
         if flightCode in self._flights:
             errorMessage( "Error: el codigo %s ya esta en uso." % ( flightCode ) )
             return;
-        f = Flight( self._aircrafts[aircraft], crew, flightCode, date, origin, destiny )
+        f = Flight( self._aircrafts[aircraft], crews, flightCode, date, origin, destiny )
         self._flights[flightCode] = f 
         self._airlines[airline].addFlight( f )
         #no se que mas queras hacerle aqui

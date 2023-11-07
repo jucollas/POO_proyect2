@@ -1,7 +1,7 @@
 from model.person import Person
 
 class Passenger(Person):
-    def __init__(self, cedula : str, name : str, surname : str, birthDate : str, genre : str, address : str, phoneNumber : str, email : str, nationality : str, medicalInfo : str, luggageAmount : int):
+    def __init__(self, cedula : str, name : str, surname : str, birthDate : str, genre : str, address : str, phoneNumber : str, email : str, nationality : str, medicalInfo : str, luggageAmount : str):
         super().__init__(cedula, name, surname, birthDate, genre, address, phoneNumber, email)
         self._nationality = nationality
         self._medicalInfo = medicalInfo
@@ -13,7 +13,7 @@ class Passenger(Person):
     def getMedicalInfo(self) -> str:
         return self._medicalInfo
     
-    def getLuggageAmount(self) -> int:
+    def getLuggageAmount(self) -> str:
         return self._luggageAmount
 
     def setMedicalInfo(self, medicalInfo):
@@ -25,5 +25,5 @@ class Passenger(Person):
         return ". ".join( tmp );
 
 if __name__ == "__main__":
-    pas = Passenger( "1110101", "oscar", "vargas", "hoy", "macho", "en tu casa", "0135462013", "hola@gmail.com", "colombiano", "muerto", 5 );
+    pas = Passenger( "1110101", "oscar", "vargas", "hoy", "macho", "en tu casa", "0135462013", "hola@gmail.com", "colombiano", "muerto", "liviano" );
     print( pas )

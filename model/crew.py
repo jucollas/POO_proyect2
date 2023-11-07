@@ -1,7 +1,8 @@
 from model.person import Person
+import datetime
 
 class Crew(Person):
-    def __init__(self, cedula: str, name: str, surname: str, birthDate: str, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int):
+    def __init__(self, cedula: str, name: str, surname: str, birthDate: datetime.date, genre: str, address: str, phoneNumber: str, email: str, jobPosition: str, dailyWorkingHours: int, yearsExperience: int):
         super().__init__(cedula, name, surname, birthDate, genre, address, phoneNumber, email)
         self._jobPosition = jobPosition
         self._dailyWorkingHours = dailyWorkingHours
