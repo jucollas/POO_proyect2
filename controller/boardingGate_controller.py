@@ -18,7 +18,7 @@ class BoardingGate_Controller():
 
 	def create_boardingGate( self, city : str, ident : str, loc : str ) -> None :
 		if city is None or ident is None or ident == "" or loc == "":
-			errorMessage( "Error: No hay informacion suficinete para crear la puerta de embarque" )
+			errorMessage( "Error: No hay informacion insuficiente para crear puerta de abordaje" )
 			return;
 		self._data.create_boardingGate( city, ident, loc )
 

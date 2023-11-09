@@ -54,9 +54,17 @@ class AirportController:
             return;
         self._passengers[cedula] = Passenger(cedula, name, surname, birthDate, genre, address, phoneNumber, email, nationality, medicalInfo, luggageAmount )
 
-    def get_passagers(self):
+    def get_passenger_generic(self, idFlight : str = None) -> list[tuple[str]]:
         ans = []
-        for pas in self._passengers.values():
+        if idFlight is None:
+            passengers = self._passengers.values()
+        else:
+            if not idFlight in self._flights:
+                errorMessage( "Error: no existe un vuelo con ese codigo de identificacion.")
+                return
+            passengers = self._flights[idFlight].getPassengers().values()
+
+        for pas in passengers:
             ans.append( (pas.getCedula(), pas.getName(), pas.getSurname(), pas.getBirthDate(), pas.getGenre(), pas.getAddress(), pas.getPhoneNumber(), pas.getEmail(), pas.getNationality(), pas.getMedicalInfo(), pas.getLuggageAmount()) )
         return ans
     
@@ -65,7 +73,14 @@ class AirportController:
             errorMessage( "Error: la cedula %s no se encuentra registrada." % ( cedula ) )
             return
         self._flights[idFlight].bookSeat(self._passengers[cedula])
-    
+
+    def del_passenger(self, cedula : str) -> None:
+        if not cedula in self._passengers:
+            errorMessage( "Error: la cedula %s no se encuentra registrada." % ( cedula ) )
+            return
+        del self._passengers[cedula]
+
+
     ###### Crew ######
 
     def get_crews( self ):
@@ -226,5 +241,12 @@ class AirportController:
         flight = self._airports[airport].continueFlight( flightId );
         if ( flight.getDestiny() in self._airports ):
             self._airports[flight.getDestiny()].addFlight( flight )
+
+    def isInAir(self, idFlight : str) -> bool:
+        if not idFlight in self._flights:
+            errorMessage("Eror: no existe un vuelo con este codigo %s" %(idFlight))
+            return
+        ans = self._flights[idFlight].isInAir()
+        return ans
 
 
