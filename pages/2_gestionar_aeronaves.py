@@ -32,7 +32,7 @@ if ( seleccion ==  "Crear Aeronave" ) :
     if ( aircraftType == "Helicoptero" ):
         nRotors = st.number_input( "Cantidad de rotores: ", key = "nRotors", min_value=0, step=1 )
         liftingCapacity = st.number_input( "Capacidad de levantar (ton): ", key = "liftingCapacity", min_value=0, step=1 )
-        specificUse = st.selectbox( "Uso: ", ["Comercial", "Privado", "Salvar vidas"] )#no me acuerdo
+        specificUse = st.selectbox( "Uso: ", ["Comercial", "Privado", "Rescate"] )#no me acuerdo
     elif ( aircraftType == "Avion" ):
         heightMax = st.number_input( "Altura Maxima (pies): ", key = "heightMax", min_value=0, step=1 )
         nEngines = st.number_input( "Cantidad de motores: ", key ="nEngines", min_value=0, step=1  )

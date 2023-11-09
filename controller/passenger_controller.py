@@ -2,6 +2,8 @@ from controller.airport_controller import AirportController
 from view.errorMessage import errorMessage            
 
 import datetime
+import requests
+import json
 
 class PassengerController():
 
@@ -34,3 +36,13 @@ class PassengerController():
 		fun = lambda f : (f.getOrigin() == origin or origin is None ) and (f.getDestiny() == destiny or destiny is None ) and (f.getDate() == date or date is None) and ( not f.isInAir())
 		flights = self._data.get_flights_generic("client", "", fun )
 		return flights
+	
+	def get_country_data(self, country_name):
+		url = f"https://restcountries.com/v3.1/name/{country_name}"
+		response = requests.get(url)
+		
+		if response.status_code == 200:
+			data = json.loads(response.text)
+			return data[0]
+		else:
+			return None
