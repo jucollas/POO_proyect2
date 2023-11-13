@@ -1,5 +1,4 @@
 from model.aircraft import Aircraft
-from model.aircraft_factory import AircraftFactory
 from model.flight import Flight
 from model.airline import Airline
 from model.passenger import Passenger
@@ -224,6 +223,8 @@ class AirportController:
             self._airports[flight.getDestiny()].addFlight( flight )
 
 
+    ## Control Tower ##
+
     def takeOff_flight( self, airport : str, flight : str ) :
         self._airports[airport].flightTakeOff( flight );
 
@@ -247,5 +248,15 @@ class AirportController:
             return
         ans = self._flights[idFlight].isInAir()
         return ans
+    
+    def notifyFlights(self, idFlight : str, airport : str ):
+        m = self._flights[idFlight].getFlightInformation()
+        self._airports[airport].notifyFlights(m)
+        tmp = m.getInfo()
+        ans = " - ".join([tmp[0], str(tmp[1]), str(tmp[2]), str(tmp[3]), str(tmp[4])])
+        return ans
+
+    def get_messages_flight(self, flight : str) -> list:
+        return self._flights[flight].getHistoryMessages()
 
 

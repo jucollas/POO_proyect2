@@ -30,6 +30,11 @@ class FlightController():
 		if airport is None:
 			return []
 		return self._data.get_flights_generic( "airport", airport )
+	
+	def get_messages_flight(self, flight) -> list[tuple]:
+		if flight is None:
+			return []
+		return self._data.get_messages_flight(flight)
 
 	def get_airline_flight_id( self, airline : str ):
 		if airline is None:
@@ -120,4 +125,11 @@ class FlightController():
 		if airport is None or flight is None:
 			return;
 		self._data.continue_flight( airport, flight )
+
+	def notifyFlights(self, flight, airport) -> str:
+		if airport is None or flight is None:
+			return;
+		ans = self._data.notifyFlights(flight, airport)
+		return ans
+		
 

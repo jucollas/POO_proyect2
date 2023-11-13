@@ -11,7 +11,7 @@ st.set_page_config(
     page_icon = ":toolbox:"
 )
 st.write( "Bienvenido a los vuelos" )
-modo = st.radio( "Elegir visualizar", ["-", "Aerolineas", "Aeropuertos"] );
+modo = st.radio( "Elegir visualizar", ["-", "Aerolineas", "Torre de control"] );
 
 if modo == "Aerolineas":
     airline = st.selectbox( "Elegir la aerolinea", controller.get_airlines() );
@@ -32,13 +32,13 @@ if modo == "Aerolineas":
     elif comand == "Crear vuelo":
         flightFrom(controller, 'Vuelo')
 
-elif modo == "Aeropuertos":
+elif modo == "Torre de control":
     airport = st.selectbox( "Elegir el aeropuerto", controller.get_airports() );
     st.dataframe( controller.get_airport_flights( airport ), hide_index = True, column_config = {
         1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "Asientos Disponibles", 8 : "En el aire"
         } );
 
-    comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Despegar", "Aterrizar", "Terminar Vuelo", "Continuar Vuelo", "Dar informacion"] );
+    comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Despegar", "Aterrizar", "Terminar Vuelo", "Continuar Vuelo", "Visualzar mensajes", "Solicitar reporte"] );
 
     if comand == "Despegar":
         flight = st.selectbox( "Elegir Vuelo", controller.get_takeOff_flights( airport ) );
@@ -58,7 +58,19 @@ elif modo == "Aeropuertos":
         flight = st.selectbox( "Elegir Vuelo", controller.get_continue_flights( airport ) );
         if ( st.button( "Continuar" ) ):
             controller.continue_flight( airport, flight )
-    elif comand == "Dar informacion":
-        pass # nota hacer esto
+
+    elif comand == "Solicitar reporte":
+        flight = st.selectbox( "Elegir Vuelo", controller.get_continue_flights( airport )  )
+
+        st.write( "Historial" )
+        st.dataframe( controller.get_messages_flight(flight), hide_index = True, column_config = {
+        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "Asientos Disponibles", 8 : "En el aire"
+        } );
+        if ( st.button( "Solicitar informacion a %s" %(flight) ) ):
+            message = controller.notifyFlights(flight, airport)
+            st.write("Mesaje recibido:")
+            st.write(message)
+
+        
 
 

@@ -19,6 +19,7 @@ class Flight():
         self._gateId = None
         self._passengers = {}
         self._crewMates = crewMates
+        self._histotyMessages : list[Message] = []
         aircraft.assignFlight(origin)
 
     # get
@@ -46,6 +47,12 @@ class Flight():
 
     def getCrewMates(self) -> list[str, Crew] :
         return self._crewMates.copy() # para evitar cambios raros en self._crewMates
+    
+    def getHistoryMessages(self) -> list:
+        ans = []
+        for m in self._histotyMessages:
+            ans.append(m.getInfo())
+        return ans
 
     # set
 
@@ -58,18 +65,19 @@ class Flight():
         return not self.isActive() and not self._alreadyFlew and not self._aircraft.isInFlight() and not self._aircraft.inManteinance();
 
     def getFlightInformation(self) -> Message :
-        if not self.isActive() or self._control is None :
+        if not self.isActive():
             return None;
         random.seed(time.time())
         latitude = round(random.uniform(-90, 90), 2)
         height = random.randint(-9000, 9000)
         longitude = round(random.uniform(-180, 180), 2)
-        message = Message(longitude, latitude, height, self.flightCode)
+        date = datetime.date(2023,2,1)
+        message = Message(longitude, latitude, height, self._flightCode, date)
         return message;
 
     def receiveMessage( self, message : Message ) -> None :
-        if message.flightCode != self.flightCode:
-            print(f"{self.flightCode} received the message: %s" % ( str( message ) ) )
+        if message.getFlightCode() != self._flightCode:
+            self._histotyMessages.append(message)
 
     def land (self ) -> None :
         pass

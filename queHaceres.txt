@@ -1,8 +1,5 @@
 Labores Pendientes:
 
- * Hace falta cumplir el requerimiento que dice que cada avion solo puede tener
- 	un vuelo saliendo desde Cali
-
  * Hay que quitar todos los print que se encuentran en Flight (en
 	operaciones como 'land' y 'takeOff'p
 
@@ -13,13 +10,11 @@ Labores Pendientes:
 	informacion particular de cada tipod e aeronave. Falta tambien hacer el
  	cuestionario del dueño del jet
 
- * archivo flight_controller: mejorar la contidion para verificar la no 
-	repeticion de codigos de vuelo (linea 66)
-
  * archivo gestionar_vuelos: hacer la parte de dar informacion
 
  * Modificar las condiciones para 'activar' y 'aterrizar' vuelos para que
 	consiederen los casos en donde no hayan puertas de abordaje disponibles
 	en el aeropuerto
+
  * Revisar las responsabilidades de la clase 'flight' ¿deberia seguir 
 	teniendo acceso al 'ControlTOwer'?
