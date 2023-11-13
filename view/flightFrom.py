@@ -9,7 +9,7 @@ def flightFrom(controller : FlightController, name : str ):
         origin = st.selectbox( "Aeropuerto de salida", controller.get_airports() )
         destiny = st.selectbox( "Aeropuerto de llegada",controller.get_airports() );
         st.write( "Aeronave" )
-        aircraft = st.selectbox( "<numero serie>|<marca> - <modelo> - <pasajeros> - <velocidad maxima> - <autonomia>", controller.get_posible_aircraft() )
+        aircraft = st.selectbox( "<numero serie>|<marca> - <modelo> - <pasajeros> - <velocidad maxima> - <autonomia>", controller.get_posible_aircraft(origin) )
         st.write( "tripulantes" )
         crew = st.multiselect( "<cedula> | <nombre> - <apellido> - <trabajo> - <horas diarias de trabajo> - <experiencia>", controller.get_crew() )
         if ( st.form_submit_button( "Guardar" ) ):

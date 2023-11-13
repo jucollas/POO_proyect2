@@ -1,6 +1,7 @@
 import streamlit as st
 from controller.passenger_controller import PassengerController
 from view.forms import PassagerForm
+from view.boards import board_flight_client
 
 controller = PassengerController()
 
@@ -20,11 +21,9 @@ elif ( seleccion == "Comprar Vuelo" ):
     date = st.date_input("Fecha:")
 
     flights = controller.get_flight_filter(origin, destiny, date )
-    print(flights)
 
-    st.dataframe( flights, hide_index = True, column_config = {
-        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "En el aire"
-        } )
+    board_flight_client(flights)
+    
     client = st.text_input("Cedula:")
     flight = st.selectbox("Identificador de Vuelo", [f[0] for f in flights] )
     if ( st.button( "Comprar" ) ):

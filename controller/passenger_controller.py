@@ -35,7 +35,8 @@ class PassengerController():
 	def get_flight_filter(self, origin : str = None, destiny : str = None, date : datetime.date = None):
 		fun = lambda f : (f.getOrigin() == origin or origin is None ) and (f.getDestiny() == destiny or destiny is None ) and (f.getDate() == date or date is None) and ( not f.isInAir())
 		flights = self._data.get_flights_generic("client", "", fun )
-		return flights
+		ans = [ tuple(list(f[0:5]) +  list(f[6 : 8])) for f in flights]
+		return ans
 	
 	def get_country_data(self, country_name):
 		url = f"https://restcountries.com/v3.1/name/{country_name}"

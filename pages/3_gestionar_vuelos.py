@@ -16,7 +16,7 @@ modo = st.radio( "Elegir visualizar", ["-", "Aerolineas", "Aeropuertos"] );
 if modo == "Aerolineas":
     airline = st.selectbox( "Elegir la aerolinea", controller.get_airlines() );
     st.dataframe( controller.get_airline_flights( airline ), hide_index = True, column_config = {
-        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "En el aire"
+        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "Asientos Disponibles", 8 : "En el aire"
         } );
 
     comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Iniciar Vuelo", "Cancelar Vuelo", "Crear vuelo"] );
@@ -35,7 +35,7 @@ if modo == "Aerolineas":
 elif modo == "Aeropuertos":
     airport = st.selectbox( "Elegir el aeropuerto", controller.get_airports() );
     st.dataframe( controller.get_airport_flights( airport ), hide_index = True, column_config = {
-        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "En el aire"
+        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "Asientos Disponibles", 8 : "En el aire"
         } );
 
     comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Despegar", "Aterrizar", "Terminar Vuelo", "Continuar Vuelo", "Dar informacion"] );

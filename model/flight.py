@@ -19,7 +19,7 @@ class Flight():
         self._gateId = None
         self._passengers = {}
         self._crewMates = crewMates
-        aircraft.assignFlight()
+        aircraft.assignFlight(origin)
 
     # get
     
@@ -131,6 +131,9 @@ class Flight():
      
     def getBookedSeats( self ) -> int :
         return len(self._passengers)
+    
+    def getTotalSeats( self ) -> int:
+        return self._aircraft.getAbilityPass()
 
     def __str__(self) -> str :
         tmp = ["active" if self.isActive() else "inactive"]

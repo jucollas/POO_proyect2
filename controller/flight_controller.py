@@ -42,11 +42,11 @@ class FlightController():
 		return [ f[0] for f in self._data.get_flights_generic( "airport", airport ) ]
 
 
-	def get_posible_aircraft(self):
+	def get_posible_aircraft(self, origin : str):
 		res = []
 		tmp = self._data.get_aircrafts();
 		for air in tmp : 
-			if ( air[10] ):
+			if ( air[11] and not origin in air[10] ):
 				res.append( "|".join( [air[0], " - ".join( [air[1], air[2], str(air[4]), str(air[5]), str(air[6])] )] ));
 		return res
 

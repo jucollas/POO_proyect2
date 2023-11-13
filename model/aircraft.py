@@ -13,6 +13,7 @@ class Aircraft:
         self._asociatedFlights : int = 0
         self._inFlight : bool = False
         self._manteinance : bool = False
+        self._originFlights = set()
 
     # gets
     
@@ -39,6 +40,9 @@ class Aircraft:
     
     def getAsociatedFlights(self) -> int :
         return self._asociatedFlights
+    
+    def getOriginFlights(self) -> set[str]:
+        return self._originFlights.copy()
     
     def isInFlight(self) -> bool :
         return self._inFlight
@@ -71,9 +75,10 @@ class Aircraft:
     def canAssignFlight(self) -> bool :
         return MaxFlightsPerAircraft > self.getAsociatedFlights()
     
-    def assignFlight(self) -> None :
+    def assignFlight(self, origin : str) -> None :
         if self.canAssignFlight():
             self._asociatedFlights += 1
+            self._originFlights.add(origin)
         else:
             raise Exception( "Error: there are many flights asociated to this aircraft\n" )
         

@@ -31,7 +31,7 @@ class AirportController:
     def get_aircrafts( self ):
         res = []
         for air in self._aircrafts.values():
-            res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance(), air.canAssignFlight() ) )
+            res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance(), air.getOriginFlights(), air.canAssignFlight() ) )
         return res;
 
     def create_aircraft( self, aircraft : Aircraft ):
@@ -192,16 +192,15 @@ class AirportController:
         for f in flights:
             if fun( f ) :
                 aircraft = f.getAircraft();
-                res.append( ( f.getFlightCode(), f.getDate(), f.getOrigin(), f.getDestiny(), aircraft.getN_number(),  f.getCrewMates(), f.isInAir() ) )
-                '''list(f.getPassengers().values()),''',
-        return res;
+                res.append( ( f.getFlightCode(), f.getDate(), f.getOrigin(), f.getDestiny(), aircraft.getN_number(),  f.getCrewMates(), str(f.getBookedSeats()) + "/" + str(f.getTotalSeats()) ,f.isInAir() ) )
+        return res
     
     def create_flight( self, airline : str, aircraft : str, flightCode : str, date : datetime.date, origin : str, destiny : str, crews : list[str] ):
         if flightCode in self._flights:
             errorMessage( "Error: el codigo %s ya esta en uso." % ( flightCode ) )
             return;
         f = Flight( self._aircrafts[aircraft], crews, flightCode, date, origin, destiny )
-        self._flights[flightCode] = f 
+        self._flights[flightCode] = f
         self._airlines[airline].addFlight( f )
         #no se que mas queras hacerle aqui
 
