@@ -1,6 +1,0 @@
-Labores Pendientes:
-
- * en el archivo 2_gestionar_aeronave.py hace falta cuadrar la categoria de los
- 	aviones y el uso especifico. Ademas, falta poder consultar/modificar 
-	informacion particular de cada tipod e aeronave. Falta tambien hacer el
- 	cuestionario del dueño del jet
