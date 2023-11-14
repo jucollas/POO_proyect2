@@ -30,11 +30,17 @@ Proyecto de la materia POO. Modelamiento de un arepuerto con interza para usuari
 
 ### Interfaz de Usuario
 
-1. **Registrarse:** Los usuarios pueden crear cuentas para acceder a funcionalidades exclusivas.
+1. **Registrarse:** Los usuarios deben resgitarse para poder compara un vuelo.
+![Registro usuario](img/registro_usuario.png)
 
 2. **Comparar Vuelos:** Permite a los usuarios buscar y comparar información sobre vuelos disponibles.
+![Compra vuelo](img/compra_vuelo.png)
+
 
 3. **Información de Países:** Proporciona datos detallados sobre diferentes países, relevantes para los usuarios.
+![Compra vuelo](img/compra_vuelo.png)
+Es necesario proporcionar la cedula anteriormente ya registrada en el sistema con el formulario anterior y seleccionar el codigo el vuelo que desear comprar.
+
 
 ### Interfaz de Administrador
 

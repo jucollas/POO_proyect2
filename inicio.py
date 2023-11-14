@@ -25,7 +25,7 @@ st.write(
 )
 
 # Imagen del aeropuerto
-st.image("static/image/aerop_alfonso.jpg", caption="Aeropuerto Alfonso Bonilla Arango")
+st.image("static/img/aerop_alfonso.jpg", caption="Aeropuerto Alfonso Bonilla Arango")
 
 # Opciones de navegación
 
