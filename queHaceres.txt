@@ -1,20 +1,6 @@
 Labores Pendientes:
 
- * Hay que quitar todos los print que se encuentran en Flight (en
-	operaciones como 'land' y 'takeOff'p
-
- * revisar el display de la historia de las puertas de abordaje
-
  * en el archivo 2_gestionar_aeronave.py hace falta cuadrar la categoria de los
  	aviones y el uso especifico. Ademas, falta poder consultar/modificar 
 	informacion particular de cada tipod e aeronave. Falta tambien hacer el
  	cuestionario del dueño del jet
-
- * archivo gestionar_vuelos: hacer la parte de dar informacion
-
- * Modificar las condiciones para 'activar' y 'aterrizar' vuelos para que
-	consiederen los casos en donde no hayan puertas de abordaje disponibles
-	en el aeropuerto
-
- * Revisar las responsabilidades de la clase 'flight' ¿deberia seguir 
-	teniendo acceso al 'ControlTOwer'?

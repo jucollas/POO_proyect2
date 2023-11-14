@@ -88,7 +88,7 @@ class loandigData:
             _controllerCrew.create_crewMember("963258741", "Laura", "Gómez", data_laura, 'Femenino', 'Cr 7 N 12-33', '321987456', 'laura@gmail.com', 'ingeniero', 8, 15)
 
             ### Flight ###
-            data = datetime.date(2023, 11, 8)
+            data = datetime.date.today()
 
 
             _controllerFlight.create_flight('Viva', 'tango-00', 'AV000', data, 'Cali', 'Bogota',["741852963", "85214567", "741852444"])

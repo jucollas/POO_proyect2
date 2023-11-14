@@ -30,7 +30,7 @@ class AirportController:
     def get_aircrafts( self ):
         res = []
         for air in self._aircrafts.values():
-            res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance(), air.getOriginFlights(), air.canAssignFlight() ) )
+            res.append( ( air.getN_number(), air.getBrand(), air.getModel(), air.getYearProduction(), air.getAbilityPass(), air.getSpeedMax(), air.getAutonomy(), air.getAsociatedFlights(), air.isInFlight(), air.inManteinance(),  air.canAssignFlight(), air.getOriginFlights() ) )
         return res;
 
     def create_aircraft( self, aircraft : Aircraft ):
@@ -44,6 +44,18 @@ class AirportController:
 
     def change_manteinance( self, nNumber : str, state : bool ):
         self._aircrafts[nNumber].toggleManteinance( state )
+
+    def whatIs(self, aircraft) -> str:
+        return str(type(self._aircrafts[aircraft])).split(".")[1]
+    
+    def get_espefic_aircraft(self, aricraft : str) -> list:
+        tmp = vars(self._aircrafts[aricraft])
+        ans  = {clave[1:]: valor for clave, valor in tmp.items()}
+        del ans["originFlights"] 
+        if "owner" in ans:
+            tmp = vars(ans["owner"])
+            ans["owner"] = {clave[1:]: valor for clave, valor in tmp.items()}
+        return ans
 
     ##### Passager ######
 
@@ -253,7 +265,7 @@ class AirportController:
         m = self._flights[idFlight].getFlightInformation()
         self._airports[airport].notifyFlights(m)
         tmp = m.getInfo()
-        ans = " - ".join([tmp[0], str(tmp[1]), str(tmp[2]), str(tmp[3]), str(tmp[4])])
+        ans = " | ".join([tmp[0], str(tmp[1]), str(tmp[2]), str(tmp[3]), str(tmp[4]), str(tmp[5])])
         return ans
 
     def get_messages_flight(self, flight : str) -> list:

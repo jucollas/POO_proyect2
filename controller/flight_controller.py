@@ -51,7 +51,7 @@ class FlightController():
 		res = []
 		tmp = self._data.get_aircrafts();
 		for air in tmp : 
-			if ( air[11] and not origin in air[10] ):
+			if ( air[11] and not origin in air[11] ):
 				res.append( "|".join( [air[0], " - ".join( [air[1], air[2], str(air[4]), str(air[5]), str(air[6])] )] ));
 		return res
 

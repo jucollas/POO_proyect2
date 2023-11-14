@@ -21,6 +21,9 @@ class Jet(Aircraft):
         if index >= 1 and index <= len(self._services):
             del self._services[index - 1]
 
+    def getServices(self):
+        return self._services.copy()
+
     def addDestination(self, des) -> None :
         self._frequentDestinations.append(des)
 

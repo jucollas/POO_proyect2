@@ -9,9 +9,14 @@ class AircraftController():
 
 	def __init__(self) -> None:
 		self._data = AirportController()
-		
-	def get_aircrafts(self) :
-		return self._data.get_aircrafts();
+
+	def get_aircrafts_all(self) :
+		axu = self._data.get_aircrafts();
+		ans = []
+		for air in axu:
+			tmp = air[:-1] 
+			ans.append(tmp)
+		return ans
 
 	def create_aircraft(self, aircraft_type : str, N_number : str, brand : str, model : str, yearProduction : str, abilityPass : int, speedMax : int, autonomy : int, nRotors : int = None, liftingCapacity : int = None, specificUse : str = None, cedula : str = None, name : str = None, surname : str = None, birthDate : datetime.date = None, genre : str = None, address : str = None, phoneNumber : str = None, email : str = None, heightMax : int = None, nEngines : int = None, category : str = None) -> None :
 		if ( N_number == "" or brand == "" or model == ""):
@@ -62,3 +67,14 @@ class AircraftController():
 		if airId is None:
 			return;
 		self._data.change_manteinance( airId,manteinance )
+
+	def whatIs(self, aircraft : str):
+		if aircraft is None:
+			return
+		return self._data.whatIs(aircraft)
+	
+	def get_espefic_aircraft(self, aircraft):
+		if aircraft is None:
+			return
+		return self._data.get_espefic_aircraft(aircraft)
+		

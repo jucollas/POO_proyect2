@@ -38,7 +38,7 @@ elif modo == "Torre de control":
         1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "Asientos Disponibles", 8 : "En el aire"
         } );
 
-    comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Despegar", "Aterrizar", "Terminar Vuelo", "Continuar Vuelo", "Visualzar mensajes", "Solicitar reporte"] );
+    comand = st.selectbox( "¿Que accion deseas hacer?", ["-", "Despegar", "Aterrizar", "Terminar Vuelo", "Continuar Vuelo", "Solicitar reporte"] );
 
     if comand == "Despegar":
         flight = st.selectbox( "Elegir Vuelo", controller.get_takeOff_flights( airport ) );
@@ -64,11 +64,12 @@ elif modo == "Torre de control":
 
         st.write( "Historial" )
         st.dataframe( controller.get_messages_flight(flight), hide_index = True, column_config = {
-        1 : "codigo de vuelo", 2 : "Fecha", 3 : "origen", 4 : "llegada", 5: "serie aeronave", 6 : "tripulacion", 7 : "Asientos Disponibles", 8 : "En el aire"
+        1 : "codigo de vuelo", 2 : "Fecha", 3 : "Hora", 4 : "Altitud", 5: "Latitud", 6 : "Logitud"
         } );
         if ( st.button( "Solicitar informacion a %s" %(flight) ) ):
             message = controller.notifyFlights(flight, airport)
             st.write("Mesaje recibido:")
+            st.write("Codigo de vuelo | Fecha | Hora | Altitud | Latitud | Logitud")
             st.write(message)
 
         

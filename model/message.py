@@ -2,8 +2,9 @@ import datetime
 
 class Message:
     
-    def __init__(self, latitude : float, longitude : float, height : float, flightCode : str, date : datetime.date) -> None:
-        self._date : datetime = date
+    def __init__(self, latitude : float, longitude : float, height : float, flightCode : str) -> None:
+        self._date = datetime.date.today()
+        self._hour = datetime.datetime.now().time()
         self._latitude = latitude
         self._longitude = longitude
         self._height = height
@@ -13,7 +14,7 @@ class Message:
         return self._flightCode
 
     def getInfo(self) -> tuple:
-        ans = (self._flightCode, self._date, self._height, self._latitude, self._longitude)
+        ans = (self._flightCode, self._date, self._hour, self._height, self._latitude, self._longitude)
         return ans
 
     def __str__(self) -> None:

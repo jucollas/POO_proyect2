@@ -14,3 +14,4 @@ def flightFrom(controller : FlightController, name : str ):
         crew = st.multiselect( "<cedula> | <nombre> - <apellido> - <trabajo> - <horas diarias de trabajo> - <experiencia>", controller.get_crew() )
         if ( st.form_submit_button( "Guardar" ) ):
             controller.create_flight( selectedAirline, None if aircraft is None else (aircraft.split("|"))[0], flightCode, date, origin, destiny, None if crew is None else  [ (el.split("|"))[0] for el in crew ] );
+

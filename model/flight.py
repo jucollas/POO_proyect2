@@ -69,10 +69,9 @@ class Flight():
             return None;
         random.seed(time.time())
         latitude = round(random.uniform(-90, 90), 2)
-        height = random.randint(-9000, 9000)
+        height = random.randint(0, 9000)
         longitude = round(random.uniform(-180, 180), 2)
-        date = datetime.date(2023,2,1)
-        message = Message(longitude, latitude, height, self._flightCode, date)
+        message = Message(longitude, latitude, height, self._flightCode)
         return message;
 
     def receiveMessage( self, message : Message ) -> None :

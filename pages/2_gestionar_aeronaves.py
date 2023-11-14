@@ -1,5 +1,6 @@
 import streamlit as st
 from controller.aircraft_controller import AircraftController
+from view.aircraftBoards import allInfoAircraft
 
 controller = AircraftController()
 
@@ -11,11 +12,11 @@ st.set_page_config(
 
 st.write( "Aeronaves" );
 
-st.dataframe( controller.get_aircrafts(), use_container_width = True, hide_index = True, column_config = {
+st.dataframe( controller.get_aircrafts_all(), use_container_width = True, hide_index = True, column_config = {
     1:"Numero de serie", 2:"Marca",3:"Modelo",4:"Año produccion",5:"Capacidad pasajeros",6:"Velocidad Maxima",7:"Autonomia",8:"Vuelos Asociados", 9:"En Vuelo", 10:"En Mantenimiento", 11 :"¿se puede asignar vuelos?"
     } );
 
-seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Aeronave", "Eliminar Aeronave", "Mantenimiento"]);
+seleccion = st.radio("¿Que quieres hacer?", [" - ", "Crear Aeronave", "Eliminar Aeronave", "Mantenimiento", "Dar Informacion detallada"]);
 
 
 if ( seleccion ==  "Crear Aeronave" ) :
@@ -59,3 +60,12 @@ elif ( seleccion == "Mantenimiento" ):
     manteinance = st.toggle( "Mantenimiento", value = controller.get_aircraft_manteinanceInfo( craft ) );
     if ( st.button( "Realizar Cambio" ) ):
         controller.change_manteinance( craft, manteinance );
+elif ( seleccion == "Dar Informacion detallada" ):
+    craft = st.selectbox( "Elegir Areonave", [ air[0] for air in controller.get_aircrafts_all() ])
+    if craft != None:
+        typ = controller.whatIs(craft)
+        info = controller.get_espefic_aircraft(craft)
+        st.write("Informacion detallada de %s (%s)" %(craft, typ))
+        allInfoAircraft(controller.get_espefic_aircraft(craft))
+
+    
