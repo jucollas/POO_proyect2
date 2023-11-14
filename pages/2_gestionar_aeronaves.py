@@ -1,6 +1,7 @@
 import streamlit as st
 from controller.aircraft_controller import AircraftController
 from view.aircraftBoards import allInfoAircraft
+import datetime
 
 controller = AircraftController()
 
@@ -43,7 +44,7 @@ if ( seleccion ==  "Crear Aeronave" ) :
         cedula = st.text_input( "Cedula: ", key = "cedula" )
         name = st.text_input( "Nombre: ", key = "name" )
         surname = st.text_input( "Apellido: ", key = "surname" )
-        birthDate = st.date_input( "Fecha de Nacimiento: " );
+        birthDate = st.date_input( "Fecha de Nacimiento: ", max_value=datetime.date.today() )
         genre = st.selectbox( "Genero: ", ["Masculino", "Femenino", "Otro"] )
         address = st.text_input( "Direccion: ", key = "address" )
         phoneNumber = st.text_input( "Numero de telefono: ", key = "phoneNumber" )

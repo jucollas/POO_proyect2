@@ -2,6 +2,7 @@ import streamlit as st
 from controller.passenger_controller import PassengerController
 from view.forms import PassagerForm
 from view.boards import board_flight_client
+import datetime
 
 controller = PassengerController()
 
@@ -18,7 +19,7 @@ elif ( seleccion == "Comprar Vuelo" ):
     
     origin = st.selectbox("Origen: ", controller.get_airports())
     destiny = st.selectbox("Destino: ", controller.get_airports())
-    date = st.date_input("Fecha:")
+    date = st.date_input("Fecha:", min_value=datetime.date.today())
 
     flights = controller.get_flight_filter(origin, destiny, date )
 
@@ -67,6 +68,4 @@ elif (seleccion == "Informacion paises"):
             
         else:
             st.error("Error en la consulta de datos. Asegúrate de seleccionar un país válido.")
-
-
-
+            
